@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/btn_return.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/btn_return.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/float_logo.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/float_logo.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/home.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/home.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/camera_on.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/camera_on.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/camera_off.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/camera_off.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/lock_on.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/lock_on.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/lock_off.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/lock_off.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/recording_background_vertical.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/recording_background_vertical.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    }
+]

@@ -1,0 +1,286 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:2:1-120:12
+	package
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:2:11-37
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:3:11-69
+	android:versionCode
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:6:5-78
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:6:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:7:5-75
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:7:22-73
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:8:5-74
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:8:22-72
+uses-permission#android.permission.CALL_PHONE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:9:5-68
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:9:22-66
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:10:5-80
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:10:22-78
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:11:5-72
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:11:22-70
+uses-permission#android.permission.READ_LOGS
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:12:5-67
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:12:22-65
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:13:5-70
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:13:22-68
+uses-permission#android.permission.CAMERA
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:14:5-64
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:14:22-62
+uses-feature#android.hardware.camera
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:16:5-59
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:16:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:17:5-69
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:17:19-67
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:19:5-80
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:19:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:20:5-78
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:20:22-76
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:22:5-78
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:22:22-76
+uses-permission#android.permission.GET_TASKS
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:23:5-67
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:23:22-65
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:24:5-79
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:24:22-77
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:25:5-80
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:25:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:26:5-65
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:26:22-63
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:27:5-67
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:27:22-65
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:28:5-77
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:28:22-75
+application
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:30:5-118:19
+MERGED from [com.android.support:design:25.2.0] /Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:25.2.0] /Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] /Users/burns_h/.android/build-cache/d733cb1423c5dad34d1f38bdd488dd24a2e8c2e3/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.2.0] /Users/burns_h/.android/build-cache/e12a41d36d688cbdc89488b396cb22e2927d43b0/output/AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:transition:25.2.0] /Users/burns_h/.android/build-cache/03ae6fc62f210deac94b238796e4b4e215936590/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:25.2.0] /Users/burns_h/.android/build-cache/cfcd6c1bf9f047c54d9e3b1abaa93916caa29622/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/burns_h/.android/build-cache/fbf79b6b48be671a92f1a0c0d18e471a806d794f/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/burns_h/.android/build-cache/f8719c5a646dc51f168653bacd6641ee09249ae9/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/burns_h/.android/build-cache/9887fb5a7ead984e4786f6f463f133dbfbe64859/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/burns_h/.android/build-cache/1a4cdc8a35aef4ee4eb4b63381a1a5ea361ae1e5/output/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-compat:25.2.0] /Users/burns_h/.android/build-cache/93109f36e2a37b75dbbfe8b61e65dbc6402fde89/output/AndroidManifest.xml:25:5-20
+	android:label
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:34:9-41
+	android:allowBackup
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:32:9-35
+	android:icon
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:33:9-45
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:35:9-40
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:31:9-32
+activity#com.andruby.live.activity.SplashActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:36:9-46:20
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:39:13-49
+	android:launchMode
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:38:13-43
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:40:13-47
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:37:13-52
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:41:13-45:29
+action#android.intent.action.MAIN
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:42:17-68
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:42:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:44:17-76
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:44:27-74
+service#com.tencent.qalsdk.service.QalService
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:49:9-52:44
+	android:process
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:52:13-42
+	android:exported
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:51:13-37
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:50:13-65
+service#com.tencent.qalsdk.service.QalAssistService
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:54:9-57:44
+	android:process
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:57:13-42
+	android:exported
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:56:13-37
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:55:13-71
+receiver#com.tencent.qalsdk.QALBroadcastReceiver
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:59:9-65:20
+	android:exported
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:61:13-37
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:60:13-67
+intent-filter#com.tencent.qalsdk.broadcast.qal
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:62:13-64:29
+action#com.tencent.qalsdk.broadcast.qal
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:63:17-74
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:63:25-72
+receiver#com.tencent.qalsdk.core.NetConnInfoCenter
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:67:9-82:20
+	android:process
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:69:13-42
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:68:13-69
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:70:13-72:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:71:17-78
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:71:25-76
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:73:13-75:29
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:74:17-78
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:74:25-76
+intent-filter#android.intent.action.TIME_SET
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:76:13-78:29
+action#android.intent.action.TIME_SET
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:77:17-72
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:77:25-70
+intent-filter#android.intent.action.TIMEZONE_CHANGED
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:79:13-81:29
+action#android.intent.action.TIMEZONE_CHANGED
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:80:17-80
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:80:25-78
+activity#com.andruby.live.activity.LoginActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:84:9-87:48
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:86:13-49
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:87:13-46
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:85:13-51
+activity#com.andruby.live.activity.RegisterActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:88:9-91:51
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:90:13-49
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:91:13-49
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:89:13-54
+activity#com.andruby.live.activity.MainActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:92:9-95:51
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:95:13-49
+	android:launchMode
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:94:13-43
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:93:13-50
+activity#com.andruby.live.activity.PublishSettingActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:96:9-98:51
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:98:13-49
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:97:13-60
+activity#com.andruby.live.activity.LivePublisherActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:99:9-102:58
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:101:13-49
+	android:windowSoftInputMode
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:102:13-56
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:100:13-59
+activity#com.andruby.live.activity.LivePlayerActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:103:9-107:58
+	android:screenOrientation
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:105:13-49
+	android:windowSoftInputMode
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:107:13-56
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:106:13-47
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:104:13-56
+activity#com.tencent.rtmp.video.TXScreenCapture$TXScreenCaptureAssistantActivity
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:108:9-110:63
+	android:theme
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:110:13-61
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:109:13-99
+service#com.andruby.live.service.ScreenRecordService
+ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:112:9-117:19
+	android:enabled
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:114:13-35
+	android:exported
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:115:13-37
+	android:name
+		ADDED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml:113:13-56
+uses-sdk
+INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:design:25.2.0] /Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.2.0] /Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] /Users/burns_h/.android/build-cache/d733cb1423c5dad34d1f38bdd488dd24a2e8c2e3/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.2.0] /Users/burns_h/.android/build-cache/e12a41d36d688cbdc89488b396cb22e2927d43b0/output/AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:transition:25.2.0] /Users/burns_h/.android/build-cache/03ae6fc62f210deac94b238796e4b4e215936590/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.2.0] /Users/burns_h/.android/build-cache/cfcd6c1bf9f047c54d9e3b1abaa93916caa29622/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.2.0] /Users/burns_h/.android/build-cache/fbf79b6b48be671a92f1a0c0d18e471a806d794f/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.2.0] /Users/burns_h/.android/build-cache/f8719c5a646dc51f168653bacd6641ee09249ae9/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.2.0] /Users/burns_h/.android/build-cache/9887fb5a7ead984e4786f6f463f133dbfbe64859/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:recyclerview-v7:25.2.0] /Users/burns_h/.android/build-cache/ec8e15ae0bb34705383ad99d21db8096aef6428a/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-core-ui:25.2.0] /Users/burns_h/.android/build-cache/1a4cdc8a35aef4ee4eb4b63381a1a5ea361ae1e5/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.2.0] /Users/burns_h/.android/build-cache/93109f36e2a37b75dbbfe8b61e65dbc6402fde89/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.github.ctiao:dfm:0.4.4] /Users/burns_h/.android/build-cache/fff201d6601c629d274609dbbe891e8ec8dfb82c/output/AndroidManifest.xml:22:5-24:41
+MERGED from [com.zhy:okhttputils:2.6.2] /Users/burns_h/.android/build-cache/d4ee21c66d43bf47163dd962c0ba0173599ec277/output/AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.2.0] /Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/AndroidManifest.xml

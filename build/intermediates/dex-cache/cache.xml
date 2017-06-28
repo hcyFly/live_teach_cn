@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/tls_sdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9c5362cce8b694aa3ae38a8376ffa707a145fb79">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/tls_sdk_91413d32bf1c5a73b985521e415ca729e13e0e97/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="31368765cdf506badb4c40494ed2b8da1805fc7e">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c4a741fc326dde648f819acd62823be64057bda0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/wup-1.0.0-SNAPSHOT.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="dd8fa9304e376adaf936c3db097240d2efcb116f">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/wup-1.0.0-SNAPSHOT_6ca005f68d465f99eeaaf79fa8ee93df2300ccbd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_gradle/gradle-4.0/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.3.1/19047bdb6a4fc00a44124f64ca98e88fc204e7e3/okhttp-3.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.3.1_b51c00f955deb00e493e9761a83b6566b97f2e0c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/.android/build-cache/d4ee21c66d43bf47163dd962c0ba0173599ec277/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="155fef2600f48631a9e9665c0873743b6d24e324">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_b8b1ef5e093758e7e8caf62dd6a6078b1adf1eec/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_gradle/gradle-4.0/caches/modules-2/files-2.1/com.squareup.okio/okio/1.8.0/5ea7af56cc7c567ed9856d99efb30740e9b17ff/okio-1.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.8.0_631705bed89249cd7491ea37e4963b66256037b1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/mobilepb.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a5e62566e5023a4497edcb883324e82771c8c9fb">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/mobilepb_fc11a9103bb06953ebddc39d95a3ef2f15b2d629/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/imsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="de2f254b1f86fcd4be7afde79f4c25217d58bee9">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/imsdk_5f8209f14a07e235955cf22393ade2f538543d6a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_9c6731eec0f05d64b4fd979aae5b65145fed235f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/soload.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="75fac6d5abe785d6658b93e008f7ef77b3fcfdc0">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/soload_3e5141e4d5ade4433e5fdcba11494058270e962b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/txrtmpsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="28a9cfea09c5c68f739ed0569ae6e9a02978b132">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/txrtmpsdk_59685464d8df223f19ea83c6828e42ee5f4940bd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/.android/build-cache/fff201d6601c629d274609dbbe891e8ec8dfb82c/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3b3f584b84edf343ad7475cc0ee3715ef7757908">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_c1bf87c6c2e668c0cfcf73ca8c37ff5609c09844/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/qalsdk.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d483ea2c44f44d8952731f131298e2dce0ad94e7">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/qalsdk_6e6741182df77e222684c40a61458505b964c088/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/libs/nineoldandroids-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a43cf9e271b5bc564e880a0a4be63ab9c69c97f8">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/2/nineoldandroids-2.4.0_9dc963028cb3f02171a2cb308e80782f4d9e0f2e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/burns_h/Documents/as_sdk/android-sdk-macosx/build-tools/25.0.2/renderscript/lib/renderscript-v8.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="05668b8cd6c7b07f152b6a5b4c6cff620817ba0f">
+        <dex dex="/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10/renderscript-v8_132ac4b1fa0bc717572cf56d8b53691e7983c4dd/classes.dex" />
+    </item>
+
+</items>

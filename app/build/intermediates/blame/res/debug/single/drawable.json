@@ -1,0 +1,402 @@
+[
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/play_seekbar_progress.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/play_seekbar_progress.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/icon_like.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/icon_like.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_gift_item_bg_shape.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_gift_item_bg_shape.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_third_sina_selecter.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_third_sina_selecter.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/tab_pubish_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/tab_pubish_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/pusher_info_background.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/pusher_info_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_spinner_textfield_background_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_part_full_bg.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_part_full_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_btn_default_mtrl_shape.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/loginout_sure_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/loginout_sure_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_btn_gift_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_btn_gift_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/design_snackbar_background.xml",
+        "source": "/Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/res/drawable/design_snackbar_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/progress_bar_rotate_public.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/progress_bar_rotate_public.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/pb_live_giftmarket_bg.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/pb_live_giftmarket_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_gift_dialog_transparent_oval.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_gift_dialog_transparent_oval.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/shape_red_point.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/shape_red_point.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_part_bg.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_part_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_return.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_return.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_send_message.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_send_message.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ratingbar_small_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_ab_back_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_gift_market_indicator_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_gift_market_indicator_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/pager_tab_bg.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/pager_tab_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_verify.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_verify.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_seekbar_tick_mark_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_dark.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_clear_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/button_return_home_page.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/button_return_home_page.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_switch_thumb_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_btn_radio_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_btn_colored_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ratingbar_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_third_qq_selecter.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_third_qq_selecter.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_back_gray.png",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_back_gray.png"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_login_base.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_login_base.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_close.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_close.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_btn_check_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_btn_check_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_vector_test.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_vector_test.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/loginout_cancel_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/loginout_cancel_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_gift_market_indicator_shape_normal.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_gift_market_indicator_shape_normal.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_shape_normal.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_shape_normal.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/beauty_seekbar_progress.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/beauty_seekbar_progress.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_login_button_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_login_button_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/subscribe_rotate.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/subscribe_rotate.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_menu_overflow_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/login_third_weixin_selecter.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/login_third_weixin_selecter.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_dark.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/design_password_eye.xml",
+        "source": "/Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/res/drawable/design_password_eye.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/icon_beauty_drawable.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/icon_beauty_drawable.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/xml_list_item_selected_icon.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/xml_list_item_selected_icon.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ratingbar_indicator_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_login.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_login.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/seekbar_progress_drawable.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/seekbar_progress_drawable.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/navigation_empty_icon.xml",
+        "source": "/Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/res/drawable/navigation_empty_icon.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/private_mode_background_dark.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/private_mode_background_dark.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/icon_message.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/icon_message.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_shape_pressed.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_shape_pressed.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/icon_flash.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/icon_flash.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_white_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_white_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/design_fab_background.xml",
+        "source": "/Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/res/drawable/design_fab_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/zhifu_baise_bag.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/zhifu_baise_bag.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/design_bottom_navigation_item_background.xml",
+        "source": "/Users/burns_h/.android/build-cache/3405311cb276f30daf8dd921af1515c9b90da57b/output/res/drawable/design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_text_cursor_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/camera_switch.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/camera_switch.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/shape_round_button.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/shape_round_button.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_voice_search_api_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_cab_background_internal_bg.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/switch_close.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/switch_close.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/tab_live_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/tab_live_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/hueise_fillet.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/hueise_fillet.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/live_gift_market_indicator_shape_selected.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/live_gift_market_indicator_shape_selected.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_dialog_material_background.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_cab_background_top_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_go_search_api_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_seekbar_thumb_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_live.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_live.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/switch_open.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/switch_open.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/tab_my_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/tab_my_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_btn_borderless_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_btn_borderless_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_edit_text_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/message_background.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/message_background.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/private_mode_background_light.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/private_mode_background_light.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/btn_send_message_base.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/btn_send_message_base.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_seekbar_track_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/item_giftmarket_bg_selector.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/item_giftmarket_bg_selector.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/fukebiankuang.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/fukebiankuang.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/common_loading_anim.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/common_loading_anim.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_ic_search_api_material.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/zhifu_hongse_bag.xml",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/drawable/zhifu_hongse_bag.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_light.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_light.xml",
+        "source": "/Users/burns_h/.android/build-cache/94f30c79fa50f27331f615753bee60a38de8e426/output/res/drawable/abc_item_background_holo_light.xml"
+    }
+]

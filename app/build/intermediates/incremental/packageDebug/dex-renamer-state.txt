@@ -1,0 +1,7 @@
+#Wed Jun 28 10:08:33 CST 2017
+base.0=/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c4a741fc326dde648f819acd62823be64057bda0
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_9c6731eec0f05d64b4fd979aae5b65145fed235f/classes.dex
+base.1=/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_9c6731eec0f05d64b4fd979aae5b65145fed235f
+file.0=/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c4a741fc326dde648f819acd62823be64057bda0/classes.dex

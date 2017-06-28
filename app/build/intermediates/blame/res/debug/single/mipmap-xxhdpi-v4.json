@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi-v4/recording_background_private_vertical.jpg",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/recording_background_private_vertical.jpg"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi-v4/recording_background_private_horizontal.jpg",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/recording_background_private_horizontal.jpg"
+    },
+    {
+        "merged": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/build/intermediates/res/merged/debug/mipmap-xxhdpi-v4/recording_background_horizontal.jpg",
+        "source": "/Users/burns_h/Documents/as_projectDemo/zhibodome/live_teach_23/app/src/main/res/mipmap-xxhdpi/recording_background_horizontal.jpg"
+    }
+]
