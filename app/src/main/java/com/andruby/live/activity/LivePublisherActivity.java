@@ -1,5 +1,6 @@
 package com.andruby.live.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -8,37 +9,48 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andruby.live.R;
+import com.andruby.live.adapter.UserAvatarListAdapter;
 import com.andruby.live.logic.IMLogin;
 import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.model.ChatEntity;
+import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.PusherPresenter;
 import com.andruby.live.presenter.SwipeAnimationController;
+import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.IPusherPresenter;
+import com.andruby.live.ui.customviews.InputTextMsgDialog;
+import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.HWSupportList;
 import com.andruby.live.utils.LogUtil;
+import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
-import com.tencent.TIMGroupManager;
-import com.tencent.TIMManager;
-import com.tencent.TIMValueCallBack;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
-import com.tencent.rtmp.TXRtmpApi;
 import com.tencent.rtmp.audio.TXAudioPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -46,23 +58,14 @@ import java.util.Timer;
  * @author: Andruby
  * @date: 2016年7月8日 下午4:46:44
  */
-public class LivePublisherActivity extends LiveBaseActivity implements View.OnClickListener, IPusherPresenter.IPusherView {
+public class LivePublisherActivity extends IMBaseActivity implements View.OnClickListener,
+        IPusherPresenter.IPusherView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener {
     private static final String TAG = LivePublisherActivity.class.getSimpleName();
 
 
     private TXCloudVideoView mTXCloudVideoView;
 
     private ArrayList<ChatEntity> mArrayListChatEntity = new ArrayList<>();
-
-    private long mSecond = 0;
-    private Timer mBroadcastTimer;
-
-    private int mBeautyLevel = 100;
-    private int mWhiteningLevel = 0;
-
-    private long lTotalMemberCount = 0;
-    private long lMemberCount = 0;
-    private long lHeartCount = 0;
 
     private TXLivePushConfig mTXPushConfig = new TXLivePushConfig();
 
@@ -92,6 +95,21 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
     private PusherPresenter mPusherPresenter;
     private int[] mSettingLocation = new int[2];
     private View btnSettingView;
+
+    private IMChatPresenter mIMChatPresenter;
+
+    //主播相关信息，头像、观众数
+    private ImageView ivHeadIcon;
+    private ImageView ivRecordBall;
+    private TextView tvMemberCount;
+    //播放信息：时间、红点
+    private long mSecond = 0;
+    private TextView tvBroadcastTime;
+    private Timer mBroadcastTimer;
+    private BroadcastTimerTask mBroadcastTimerTask;
+    private ObjectAnimator mObjAnim;
+
+    private InputTextMsgDialog mInputTextMsgDialog;
 
     @Override
     protected void setBeforeLayout() {
@@ -140,7 +158,31 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         mTCSwipeAnimationController = new SwipeAnimationController(this);
         mTCSwipeAnimationController.setAnimationView(mControllLayer);
 
+
+        //主播信息
+        tvBroadcastTime = obtainView(R.id.tv_broadcasting_time);
+        tvBroadcastTime.setText(String.format(Locale.US, "%s", "00:00:00"));
+        ivRecordBall = obtainView(R.id.iv_record_ball);
+        ivHeadIcon = obtainView(R.id.iv_head_icon);
+        OtherUtils.showPicWithUrl(this, ivHeadIcon, ACache.get(this).getAsString("head_pic_small"), R.drawable.default_head);
+        tvMemberCount = obtainView(R.id.tv_member_counts);
+        tvMemberCount.setText("0");
+
         mPusherPresenter = new PusherPresenter(this);
+        mIMChatPresenter = new IMChatPresenter(this);
+        recordAnmination();
+
+        mInputTextMsgDialog = new InputTextMsgDialog(this, R.style.InputDialog);
+        mInputTextMsgDialog.setmOnTextSendListener(this);
+
+
+    }
+
+    private void recordAnmination() {
+        mObjAnim = ObjectAnimator.ofFloat(ivRecordBall, "alpha", 1.0f, 0f, 1.0f);
+        mObjAnim.setDuration(1000);
+        mObjAnim.setRepeatCount(-1);
+        mObjAnim.start();
     }
 
     @Override
@@ -148,7 +190,7 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         if (mTXCloudVideoView != null) {
             mTXCloudVideoView.disableLog(false);
         }
-        createGroup();
+        mIMChatPresenter.createGroup();
     }
 
     @Override
@@ -161,16 +203,15 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         mTXPushConfig.setVideoResolution(TXLiveConstants.VIDEO_RESOLUTION_TYPE_540_960);
         mTXPushConfig.setVideoBitrate(1000);
         mTXPushConfig.setVideoFPS(20);
-        Log.i(TAG, "startPublish: MANUFACTURER " + Build.MANUFACTURER + " model:"+Build.MODEL);
-        if(HWSupportList.isHWVideoEncodeSupport()){
+        Log.i(TAG, "startPublish: MANUFACTURER " + Build.MANUFACTURER + " model:" + Build.MODEL);
+        if (HWSupportList.isHWVideoEncodeSupport()) {
             mTXPushConfig.setHardwareAcceleration(true);
             Log.i(TAG, "startPublish: 手机型号硬编码设置成功！！！");
-        }else{
+        } else {
             Log.i(TAG, "startPublish: 手机型号不支持硬编码！！！");
         }
 
-        //设置 直播画面水印 位置
-        mTXPushConfig.setWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher),50,50);
+        mTXPushConfig.setWatermark(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher), 50, 50);
         //切后台推流图片
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -178,38 +219,15 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         mTXPushConfig.setPauseImg(bitmap);
         mPusherPresenter.startPusher(mTXCloudVideoView, mTXPushConfig, mPushUrl);
 
+
+        if (mBroadcastTimer == null) {
+            mBroadcastTimer = new Timer(true);
+            mBroadcastTimerTask = new BroadcastTimerTask();
+            mBroadcastTimer.schedule(mBroadcastTimerTask, 1000, 1000);
+        }
     }
 
-    public void createGroup() {
-        //在特殊情况下未接收到kick out消息下会导致创建群组失败，在登录前做监测
-        checkLoginState(new IMLogin.IMLoginListener() {
-            @Override
-            public void onSuccess() {
-                IMLogin.getInstance().removeIMLoginListener();
-                //用户登录，创建直播间
-                TIMGroupManager.getInstance().createAVChatroomGroup("cniaow_live", new TIMValueCallBack<String>() {
-                    @Override
-                    public void onError(int code, String msg) {
-                        LogUtil.e(TAG, "create av group failed. code: " + code + " errmsg: " + msg);
-                    }
-
-                    @Override
-                    public void onSuccess(String roomId) {
-                        LogUtil.e(TAG, "create av group succ, groupId:" + roomId);
-                        mRoomId = roomId;
-                        onJoinGroupResult(0, roomId);
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                IMLogin.getInstance().removeIMLoginListener();
-            }
-        });
-
-    }
-
+    @Override
     public void onJoinGroupResult(int code, String msg) {
         if (0 == code) {
             //获取推流地址
@@ -223,19 +241,10 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         }
     }
 
-    private void checkLoginState(IMLogin.IMLoginListener loginListener) {
+    @Override
+    public void onGroupDeleteResult() {
 
-        IMLogin imLogin = IMLogin.getInstance();
-        if (TextUtils.isEmpty(TIMManager.getInstance().getLoginUser())) {
-            imLogin.setIMLoginListener(loginListener);
-            imLogin.checkCacheAndLogin();
-        } else {
-            //已经处于登录态直接进行回调
-            if (null != loginListener)
-                loginListener.onSuccess();
-        }
     }
-
 
     private void stopPublish() {
         mPusherPresenter.stopPusher();
@@ -278,6 +287,14 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         super.onDestroy();
         mTXCloudVideoView.onDestroy();
         stopPublish();
+        mIMChatPresenter.deleteGroup();
+        if (mObjAnim != null) {
+            mObjAnim.cancel();
+        }
+        if (mBroadcastTimerTask != null) {
+            mBroadcastTimerTask.cancel();
+            mBroadcastTimer.cancel();
+        }
     }
 
     @Override
@@ -287,6 +304,9 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
                 stopPublish();
                 finish();
                 break;
+            case R.id.btn_message_input:
+                showInputMsgDialog();
+                break;
             case R.id.btn_setting:
                 //setting坐标
                 mPusherPresenter.showSettingPopupWindow(btnSettingView, mSettingLocation);
@@ -294,6 +314,19 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         }
 
     }
+
+    private void showInputMsgDialog() {
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = mInputTextMsgDialog.getWindow().getAttributes();
+
+        lp.width = display.getWidth(); //设置宽度
+        mInputTextMsgDialog.getWindow().setAttributes(lp);
+        mInputTextMsgDialog.setCancelable(true);
+        mInputTextMsgDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        mInputTextMsgDialog.show();
+    }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -307,10 +340,10 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         Intent intent = new Intent(activity, LivePublisherActivity.class);
         intent.putExtra(Constants.ROOM_TITLE,
                 TextUtils.isEmpty(roomTitle) ? UserInfoMgr.getInstance().getNickname() : roomTitle);
-        intent.putExtra(Constants.USER_ID, UserInfoMgr.getInstance().getUserId());
-        intent.putExtra(Constants.USER_NICK, UserInfoMgr.getInstance().getNickname());
-        intent.putExtra(Constants.USER_HEADPIC, UserInfoMgr.getInstance().getHeadPic());
-        intent.putExtra(Constants.COVER_PIC, UserInfoMgr.getInstance().getCoverPic());
+        intent.putExtra(Constants.USER_ID, ACache.get(activity).getAsString("user_id"));
+        intent.putExtra(Constants.USER_NICK, ACache.get(activity).getAsString("nickname"));
+        intent.putExtra(Constants.USER_HEADPIC, ACache.get(activity).getAsString("head_pic_small"));
+        intent.putExtra(Constants.COVER_PIC, ACache.get(activity).getAsString("head_pic"));
         intent.putExtra(Constants.USER_LOC, location);
         intent.putExtra(Constants.IS_RECORD, isRecord);
         intent.putExtra(Constants.BITRATE, bitrateType);
@@ -340,12 +373,12 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
 
     @Override
     public void showMsg(String msg) {
-
+        ToastUtils.makeText(this, msg, Toast.LENGTH_SHORT);
     }
 
     @Override
     public void showMsg(int msg) {
-
+        ToastUtils.makeText(this, msg, Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -358,4 +391,23 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         return getFragmentManager();
     }
 
+    @Override
+    public void onTextSend(String msg, boolean tanmuOpen) {
+        mIMChatPresenter.sendTextMsg(msg);
+    }
+
+
+    class BroadcastTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            mSecond++;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvBroadcastTime.setText(OtherUtils.formattedTime(mSecond));
+                }
+            });
+        }
+    }
 }

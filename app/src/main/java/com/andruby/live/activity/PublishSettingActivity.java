@@ -39,7 +39,7 @@ import java.io.IOException;
  * @author: Andruby
  * @date: 2016年7月9日
  */
-public class PublishSettingActivity extends LiveBaseActivity implements View.OnClickListener,
+public class PublishSettingActivity extends IMBaseActivity implements View.OnClickListener,
 		IPublishSettingPresenter.IPublishSettingView, RadioGroup.OnCheckedChangeListener {
 	private static final String TAG = PublishSettingActivity.class.getSimpleName();
 

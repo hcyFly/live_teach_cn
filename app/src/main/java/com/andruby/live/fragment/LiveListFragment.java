@@ -183,7 +183,7 @@ public class LiveListFragment extends BaseFragment implements SwipeRefreshLayout
      * @param item 视频数据
      */
     private void startLivePlay(final LiveInfo item) {
-        LivePlayerActivity.invoke(getActivity(),item.playUrl);
+        LivePlayerActivity.invoke(getActivity(),item);
     }
 
     @Override

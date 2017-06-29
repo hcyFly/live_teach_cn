@@ -4,39 +4,61 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andruby.live.R;
+import com.andruby.live.logic.FrequeMgr;
+import com.andruby.live.model.LiveInfo;
+import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.LivePlayerPresenter;
+import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
+import com.andruby.live.ui.customviews.InputTextMsgDialog;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
-import com.tencent.rtmp.ITXLivePlayListener;
+import com.andruby.live.utils.OtherUtils;
+import com.andruby.live.utils.ToastUtils;
 import com.tencent.rtmp.TXLivePlayConfig;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
+import java.util.Locale;
+
 /**
- * @Description: 观众 观看播放页面  (  页面元素空)
+ * @Description: 观众 观看播放页面
  * @author: Andruby
  * @date: 2016年7月8日 下午4:46:44
  */
-public class LivePlayerActivity extends LiveBaseActivity implements View.OnClickListener, ILivePlayerPresenter.ILivePlayerView {
+public class LivePlayerActivity extends IMBaseActivity implements View.OnClickListener,
+        ILivePlayerPresenter.ILivePlayerView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener {
 
     private static final String TAG = LivePlayerActivity.class.getSimpleName();
+    public final static int LIVE_PLAYER_REQUEST_CODE = 1000;
 
     private TXCloudVideoView mTXCloudVideoView;
-    private TXLivePlayer mTXLivePlayer;
     private TXLivePlayConfig mTXPlayConfig = new TXLivePlayConfig();
     private boolean mPausing = false;
     private String mPlayUrl = "";
-    private int mPlayType = TXLivePlayer.PLAY_TYPE_VOD_FLV;
     private boolean mPlaying = false;
+    private LiveInfo mLiveInfo;
 
-    public final static int LIVE_PLAYER_REQUEST_CODE = 1000;
     private LivePlayerPresenter mLivePlayerPresenter;
+    private IMChatPresenter mIMChatPresenter;
+    //主播信息
+    private ImageView ivHeadIcon;
+    private ImageView ivRecordBall;
+    private TextView tvPuserName;
+    private TextView tvMemberCount;
+    private long mMemberCount = 0;
+
+    private InputTextMsgDialog mInputTextMsgDialog;
+
 
     @Override
     protected void setBeforeLayout() {
@@ -60,16 +82,32 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
         //mPlayerView即step1中添加的界面view
         mTXCloudVideoView = obtainView(R.id.video_view);
         mLivePlayerPresenter = new LivePlayerPresenter(this);
-        mTXPlayConfig.setConnectRetryCount(3);
-        mTXPlayConfig.setConnectRetryInterval(3);
         mLivePlayerPresenter.initPlayerView(mTXCloudVideoView, mTXPlayConfig);
+        mIMChatPresenter = new IMChatPresenter(this);
 
-        mPlayUrl = getIntent().getStringExtra(Constants.PLAY_URL);
+        //主播信息
+        tvPuserName = obtainView(R.id.tv_broadcasting_time);
+        tvPuserName.setText(OtherUtils.getLimitString(mLiveInfo.userInfo.nickname, 10));
+        ivRecordBall = obtainView(R.id.iv_record_ball);
+        ivRecordBall.setVisibility(View.GONE);
+        ivHeadIcon = obtainView(R.id.iv_head_icon);
+        OtherUtils.showPicWithUrl(this, ivHeadIcon, mLiveInfo.userInfo.headPic, R.drawable.default_head);
+        tvMemberCount = obtainView(R.id.tv_member_counts);
+
+        mInputTextMsgDialog = new InputTextMsgDialog(this, R.style.InputDialog);
+        mInputTextMsgDialog.setmOnTextSendListener(this);
+
+        mMemberCount++;
+        tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
         if (mPlayUrl != null) {
             mLivePlayerPresenter.startPlay(mPlayUrl, TXLivePlayer.PLAY_TYPE_LIVE_FLV); //推荐FLV
         } else {
             showToast("play url is empty");
         }
+
+        mIMChatPresenter.joinGroup(mLiveInfo.groupId);
+
+
     }
 
     @Override
@@ -79,7 +117,8 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
 
     private void getDataFormIntent() {
         Intent intent = getIntent();
-        mPlayUrl = intent.getStringExtra(Constants.PLAY_URL);
+        mLiveInfo = (LiveInfo) intent.getSerializableExtra(Constants.LIVE_INFO);
+        mPlayUrl = mLiveInfo.playUrl;
         LogUtil.e(TAG, "mPlayUrl:" + mPlayUrl);
     }
 
@@ -99,7 +138,30 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_back:
+                finish();
+                break;
 
+            case R.id.btn_message_input:
+                showInputMsgDialog();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void showInputMsgDialog() {
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = mInputTextMsgDialog.getWindow().getAttributes();
+
+        lp.width = display.getWidth(); //设置宽度
+        mInputTextMsgDialog.getWindow().setAttributes(lp);
+        mInputTextMsgDialog.setCancelable(true);
+        mInputTextMsgDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        mInputTextMsgDialog.show();
     }
 
     @Override
@@ -128,11 +190,13 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
     protected void onDestroy() {
         super.onDestroy();
         mLivePlayerPresenter.stopPlay(true);
+        mTXCloudVideoView.onDestroy();
+        mIMChatPresenter.quitGroup(mLiveInfo.groupId);
     }
 
-    public static void invoke(Activity activity, String playUrl) {
+    public static void invoke(Activity activity, LiveInfo liveInfo) {
         Intent intent = new Intent(activity, LivePlayerActivity.class);
-        intent.putExtra(Constants.PLAY_URL, playUrl);
+        intent.putExtra(Constants.LIVE_INFO, liveInfo);
         activity.startActivityForResult(intent, LIVE_PLAYER_REQUEST_CODE);
     }
 
@@ -148,13 +212,14 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
 
     @Override
     public void showMsg(String msg) {
-
+        ToastUtils.makeText(this, msg, Toast.LENGTH_SHORT);
     }
 
     @Override
     public void showMsg(int msg) {
-
+        ToastUtils.makeText(this, msg, Toast.LENGTH_SHORT);
     }
+
 
     @Override
     public Context getContext() {
@@ -169,5 +234,20 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
     @Override
     public void onNetStatus(Bundle bundle) {
 
+    }
+
+    @Override
+    public void onJoinGroupResult(int code, String msg) {
+
+    }
+
+    @Override
+    public void onGroupDeleteResult() {
+
+    }
+
+    @Override
+    public void onTextSend(String msg, boolean tanmuOpen) {
+        mIMChatPresenter.sendTextMsg(msg);
     }
 }

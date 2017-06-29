@@ -12,6 +12,7 @@ import com.andruby.live.activity.LoginActivity;
 import com.andruby.live.logic.IMLogin;
 import com.andruby.live.logic.IUserInfoMgrListener;
 import com.andruby.live.logic.UserInfoMgr;
+import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.DeviceUtils;
 import com.andruby.live.utils.OtherUtils;
 import com.tencent.rtmp.TXRtmpApi;
@@ -73,7 +74,8 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 if (0 == error) {
                     mNickName.setText(UserInfoMgr.getInstance().getNickname());
                     mUserId.setText("");
-                    OtherUtils.showPicWithUrl(getActivity(), mHeadPic, UserInfoMgr.getInstance().getHeadPic(), R.drawable.default_head);
+                    OtherUtils.showPicWithUrl(getActivity(), mHeadPic,
+                            ACache.get(getContext()).getAsString("head_pic_small"), R.drawable.default_head);
                 }
             }
 

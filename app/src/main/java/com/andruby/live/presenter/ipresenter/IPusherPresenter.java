@@ -32,7 +32,7 @@ public abstract class IPusherPresenter implements BasePresenter {
 
     public abstract void pausePusher();
 
-    public abstract void showSettingPopupWindow(View targetView,int[] locations);
+    public abstract void showSettingPopupWindow(View targetView, int[] locations);
 
     public interface IPusherView extends BaseView {
         /**
@@ -42,6 +42,8 @@ public abstract class IPusherPresenter implements BasePresenter {
         void onGetPushUrl(String pushUrl, int errorCode);
 
         FragmentManager getFragmentMgr();
+
+        void finish();
     }
 
 }

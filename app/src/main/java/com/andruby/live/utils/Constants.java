@@ -74,6 +74,7 @@ public class Constants {
 	public static final String BITRATE = "bitrate";
 	public static final String GROUP_ID = "group_id";
 	public static final String PLAY_URL = "play_url";
+	public static final String LIVE_INFO = "live_info";
 	public static final String PLAY_TYPE = "play_type";
 	public static final String PUSHER_AVATAR = "pusher_avatar";
 	public static final String PUSHER_ID = "pusher_id";

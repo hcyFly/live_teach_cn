@@ -346,8 +346,8 @@ public class UserInfoMgr {
 			if (!TextUtils.isEmpty(info.nickname)) {
 				setUserNickName(info.nickname, null);
 			}
-			if (!TextUtils.isEmpty(info.headPic)) {
-				setUserHeadPic(info.headPic, null);
+			if (!TextUtils.isEmpty(info.headPicSmall)) {
+				setUserHeadPic(info.headPicSmall, null);
 			}
 			final TIMFriendGenderType sexType = (info.sex == 0 ? TIMFriendGenderType.Male : TIMFriendGenderType.Female);
 			setUserSex(sexType, null);

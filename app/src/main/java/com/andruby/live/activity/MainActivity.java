@@ -25,7 +25,7 @@ import com.andruby.live.presenter.ipresenter.IMainPresenter;
  * @author: Andruby
  * @date: 2016年7月8日 下午4:46:44
  */
-public class MainActivity extends LiveBaseActivity implements IMainPresenter.IMainView {
+public class MainActivity extends IMBaseActivity implements IMainPresenter.IMainView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 

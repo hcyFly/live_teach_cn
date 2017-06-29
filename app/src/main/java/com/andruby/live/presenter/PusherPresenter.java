@@ -32,7 +32,7 @@ import com.tencent.rtmp.ui.TXCloudVideoView;
  * Created by zhao on 2017/3/2.
  */
 
-public class PusherPresenter extends IPusherPresenter implements ITXLivePushListener, BeautyDialogFragment.SeekBarCallback,FilterDialogFragment.FilterCallback{
+public class PusherPresenter extends IPusherPresenter implements ITXLivePushListener, BeautyDialogFragment.SeekBarCallback, FilterDialogFragment.FilterCallback {
 
     private IPusherView mPusherView;
     private TXLivePusher mTXLivePusher;
@@ -85,7 +85,8 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
                         mPusherView.onGetPushUrl(null, 1);
                     }
                 } else {
-                    mPusherView.onGetPushUrl(null, 1);
+                    mPusherView.showMsg(response.msg);
+                    mPusherView.finish();
                 }
             }
 
@@ -183,7 +184,7 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
                 @Override
                 public void onClick(View v) {
                     mSettingPopup.dismiss();
-                    mFilterDialogFragment.show(mPusherView.getFragmentMgr(),"");
+                    mFilterDialogFragment.show(mPusherView.getFragmentMgr(), "");
                 }
             });
 

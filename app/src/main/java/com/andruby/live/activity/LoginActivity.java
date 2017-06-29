@@ -75,7 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 }
             };
 
-            Glide.with(getApplicationContext()) // safer!
+            Glide.with(getApplicationContext())
                     .load(R.drawable.bg_login)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(viewTarget);

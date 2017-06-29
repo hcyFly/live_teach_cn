@@ -135,9 +135,8 @@ public class PublishSettingPresenter extends IPublishSettingPresenter {
 				mBaseView.showMsg("screen live");
 			} else {
 				//摄像头直播
-				mBaseView.showMsg("camera live");
+//				mBaseView.showMsg("camera live");
 				LivePublisherActivity.invoke(mPublishSettingView.getActivity(), title, location, isRecord, bitrateType);
-
 			}
 
 		}
