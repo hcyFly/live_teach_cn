@@ -16,12 +16,11 @@ import com.andruby.live.presenter.MainPresenter;
 import com.andruby.live.presenter.ipresenter.IMainPresenter;
 
 
-
 /**
- * @Description:  主界面， 包括直播列表，用户信息页
- *                  UI使用FragmentTabHost+Fragment
- *                  直播列表：LiveMainFragment
- *                  个人信息页：UserInfoFragment
+ * @Description: 主界面， 包括直播列表，用户信息页
+ * UI使用FragmentTabHost+Fragment
+ * 直播列表：LiveMainFragment
+ * 个人信息页：UserInfoFragment
  * @author: Andruby
  * @date: 2016年7月8日 下午4:46:44
  */
@@ -49,7 +48,7 @@ public class MainActivity extends IMBaseActivity implements IMainPresenter.IMain
 
     @Override
     protected void initView() {
-        mTabHost = (FragmentTabHost) obtainView(android.R.id.tabhost);
+        mTabHost = obtainView(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.contentPanel);
     }
 
@@ -128,4 +127,9 @@ public class MainActivity extends IMBaseActivity implements IMainPresenter.IMain
         return view;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getSupportFragmentManager().findFragmentByTag(mTabHost.getCurrentTabTag()).onActivityResult(requestCode, resultCode, data);
+    }
 }

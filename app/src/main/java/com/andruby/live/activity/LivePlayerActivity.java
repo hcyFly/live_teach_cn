@@ -73,7 +73,7 @@ import java.util.Locale;
  */
 public class LivePlayerActivity extends IMBaseActivity implements View.OnClickListener,
         ILivePlayerPresenter.ILivePlayerView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener,
-        ILiveGiftPresenter.ILiveGiftView, LiveGiftView.LiveGiftViewListener {
+        ILiveGiftPresenter.ILiveGiftView, LiveGiftView.LiveGiftViewListener, UserAvatarListAdapter.OnItemClickListener {
 
     private static final String TAG = LivePlayerActivity.class.getSimpleName();
     public final static int LIVE_PLAYER_REQUEST_CODE = 1000;
@@ -171,6 +171,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         ivRecordBall = obtainView(R.id.iv_record_ball);
         ivRecordBall.setVisibility(View.GONE);
         ivHeadIcon = obtainView(R.id.iv_head_icon);
+        ivHeadIcon.setOnClickListener(this);
         OtherUtils.showPicWithUrl(this, ivHeadIcon, mLiveInfo.userInfo.headPic, R.drawable.default_head);
         tvMemberCount = obtainView(R.id.tv_member_counts);
 
@@ -198,6 +199,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mUserAvatarList.setVisibility(View.VISIBLE);
         mAvatarListAdapter = new UserAvatarListAdapter(this, IMLogin.getInstance().getLastUserInfo().identifier);
         mUserAvatarList.setAdapter(mAvatarListAdapter);
+        mAvatarListAdapter.setOnItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mUserAvatarList.setLayoutManager(linearLayoutManager);
@@ -225,10 +227,6 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mLiveGiftPresenter = new LiveGiftPresenter(this);
         mLiveGiftPresenter.giftList(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId);
         mLiveGiftPresenter.coinCount(ACache.get(this).getAsString("user_id"));
-
-//        showManager = new GiftShowManager(this, (LinearLayout) obtainView(R.id.live_gift_con1));
-//        showManager.startGetGift();
-//        showManager.setShowGiftManagerIsEmptyListener(this);
 
         Intent intent = new Intent(this, LiveGiftServices.class);
         bindService(intent, mGiftConn, BIND_AUTO_CREATE);
@@ -286,6 +284,10 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
                 break;
             case R.id.btn_gift:
                 mLiveGiftView.show();
+                break;
+            case R.id.iv_head_icon:
+                SimpleUserInfo userInfo = new SimpleUserInfo(mLiveInfo.userInfo.userId, mLiveInfo.userInfo.nickname, mLiveInfo.userInfo.headPic);
+                mLivePlayerPresenter.showUserInfo(this, userInfo);
                 break;
             default:
                 break;
@@ -676,4 +678,8 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mLiveGiftPresenter.sendGift(giftInfo, ACache.get(this).getAsString("user_id"), mLiveInfo.liveId);
     }
 
+    @Override
+    public void onItemClickListener(SimpleUserInfo userInfo) {
+        mLivePlayerPresenter.showUserInfo(this, userInfo);
+    }
 }

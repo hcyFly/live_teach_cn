@@ -13,7 +13,7 @@
     </declare-styleable>
 
     <!-- 条形控制控件自定义属性 -->
-    <declare-styleable name="TCLineView">
+    <declare-styleable name="LineView">
         <!-- 名称 -->
         <attr name="name" format="string"/>
         <!-- 内容或当前状态 -->

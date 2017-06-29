@@ -35,16 +35,11 @@ public abstract class BaseAdapter<T> extends ArrayAdapter<T> {
 		}
 
 		initData(viewHolder, data, position);
-		// super.getView(icon_position, convertView, parent)
 
 		return convertView;
 	}
 
 	protected abstract int getViewLayoutId();
-
-	protected void initItemView(ViewHolder viewHolder, T data) {
-
-	}
 
 	protected abstract void initData(ViewHolder viewHolder, T data, int position);
 

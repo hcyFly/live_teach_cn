@@ -114,6 +114,7 @@
     <string name="app_set">个人信息</string>
     <string name="app_fance">我的粉丝</string>
     <string name="app_follow">我的关注</string>
+    <string name="app_review">我的回看</string>
     <string name="btn_login_out">退出登录</string>
     <string name="tip_force_offline">您的帐号已在其它地方登陆</string>
 
@@ -275,4 +276,9 @@
     <string name="msg_stop_watch">正在观看直播，是否退出观看？</string>
     <string name="live_cover_upload_failed">直播封面上传失败</string>
     <string name="beauty_disenable">手机不支持美颜效果！</string>
+
+    <string name="update_userinfo_success">用户信息修改成功</string>
+    <string name="update_userinfo_failed">用户信息修改失败</string>
+    <string name="my_about_info">菜鸟窝直播是以腾讯云直播为基础开发的一款直播软件。\r\n当前版本号%s</string>
+    <string name="userinfo_modified_msg">用户信息已修改，是否保存？</string>
 </resources>

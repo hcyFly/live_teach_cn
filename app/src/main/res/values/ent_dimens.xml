@@ -72,4 +72,7 @@
     <dimen name="space_245">245dip</dimen>
     <dimen name="space_94">94dp</dimen>
     <dimen name="space_81">81dip</dimen>
+    <dimen name="space_10">10dip</dimen>
+    <dimen name="space_40">40.0dip</dimen>
+    <dimen name="space_50">50dp</dimen>
 </resources>

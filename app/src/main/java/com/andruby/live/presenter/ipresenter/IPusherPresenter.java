@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.andruby.live.base.BasePresenter;
 import com.andruby.live.base.BaseView;
+import com.andruby.live.presenter.ILivePresenter;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
@@ -15,7 +16,7 @@ import com.tencent.rtmp.ui.TXCloudVideoView;
  * @author: Andruby
  * @time: 2016/12/15 11:54
  */
-public abstract class IPusherPresenter implements BasePresenter {
+public abstract class IPusherPresenter extends ILivePresenter implements BasePresenter {
     protected BaseView mBaseView;
 
     public IPusherPresenter(BaseView baseView) {
@@ -39,6 +40,7 @@ public abstract class IPusherPresenter implements BasePresenter {
 
     /**
      * 直播状态改变1，在线，直播中，0不在线，直播结束
+     *
      * @param userId
      * @param status
      */
@@ -46,6 +48,7 @@ public abstract class IPusherPresenter implements BasePresenter {
 
     /**
      * 结束直播
+     *
      * @param userId
      * @param groupId
      */

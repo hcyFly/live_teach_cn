@@ -1,21 +1,23 @@
 package com.andruby.live.fragment;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andruby.live.R;
+import com.andruby.live.activity.EditUseInfoActivity;
 import com.andruby.live.activity.LoginActivity;
 import com.andruby.live.logic.IMLogin;
-import com.andruby.live.logic.IUserInfoMgrListener;
-import com.andruby.live.logic.UserInfoMgr;
-import com.andruby.live.utils.AsimpleCache.ACache;
+import com.andruby.live.model.UserInfoCache;
 import com.andruby.live.utils.DeviceUtils;
+import com.andruby.live.utils.DialogUtil;
+import com.andruby.live.utils.ImageUtil;
 import com.andruby.live.utils.OtherUtils;
-import com.tencent.rtmp.TXRtmpApi;
 
 /**
  * @description: 用户资料展示页面
@@ -26,7 +28,6 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     private static final String TAG = "UserInfoFragment";
     private ImageView mHeadPic;
     private TextView mNickName;
-    private TextView mUserId;
 
     public UserInfoFragment() {
     }
@@ -40,12 +41,12 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     protected void initView(View view) {
         mHeadPic = obtainView(R.id.iv_ui_head);
         mNickName = obtainView(R.id.tv_ui_nickname);
-        mUserId = obtainView(R.id.tv_ui_user_id);
     }
 
     @Override
     protected void initData() {
-
+        mNickName.setText(UserInfoCache.getNickname(getContext()));
+        ImageUtil.showRoundImage(getActivity(), mHeadPic, UserInfoCache.getHeadPic(getContext()), R.drawable.default_head);
     }
 
     @Override
@@ -55,6 +56,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         obtainView(R.id.lcv_ui_version).setOnClickListener(this);
         obtainView(R.id.fanceview).setOnClickListener(this);
         obtainView(R.id.followView).setOnClickListener(this);
+        obtainView(R.id.review).setOnClickListener(this);
     }
 
 
@@ -66,24 +68,6 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-
-        //页面展示之前，更新一下用户信息
-        UserInfoMgr.getInstance().queryUserInfo(new IUserInfoMgrListener() {
-            @Override
-            public void OnQueryUserInfo(int error, String errorMsg) {
-                if (0 == error) {
-                    mNickName.setText(UserInfoMgr.getInstance().getNickname());
-                    mUserId.setText("");
-                    OtherUtils.showPicWithUrl(getActivity(), mHeadPic,
-                            ACache.get(getContext()).getAsString("head_pic_small"), R.drawable.default_head);
-                }
-            }
-
-            @Override
-            public void OnSetUserInfo(int error, String errorMsg) {
-
-            }
-        });
     }
 
     @Override
@@ -97,7 +81,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void enterEditUserInfo() {
-//        EditUseInfoActivity.invoke(getContext());
+        EditUseInfoActivity.invoke(getActivity());
     }
 
     @Override
@@ -109,14 +93,14 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
             case R.id.lcv_ui_logout: //注销APP
                 showLogout();
                 break;
-            case R.id.lcv_ui_version: //显示 APP SDK 的版本信息
-                showSDKVersion();
+            case R.id.lcv_ui_version:
+                showAbout();
                 break;
             case R.id.fanceview:
-//                FanceActivity.invoke(mContext);
                 break;
             case R.id.followView:
-//                FollowActivity.invoke(mContext);
+                break;
+            case R.id.review:
                 break;
         }
     }
@@ -125,44 +109,41 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      * 退出登录
      */
     private void showLogout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setCancelable(true);
-        builder.setTitle("您确定要退出？");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        DialogUtil.showComfirmDialog(getContext(), "你确定要退出当前账号吗？", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 IMLogin.getInstance().logout();
-                LoginActivity.invoke(mContext);
+                LoginActivity.invoke(getContext());
                 getActivity().finish();
             }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        }, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
 
     /**
-     * 显示 APP SDK 的版本信息
+     * 显示关于信息
      */
-    private void showSDKVersion() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+    private void showAbout() {
+        DialogUtil.showMsgDialog(getActivity(), getString(R.string.my_about_info, DeviceUtils.getAppVersion(getContext())), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        int[] sdkver = TXRtmpApi.getSDKVersion();
-        builder.setMessage(getString(R.string.app_name) + DeviceUtils.getAppVersion(mContext) + "\r\n"
-        );
-        builder.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
+            mNickName.setText(UserInfoCache.getNickname(getContext()));
+            ImageUtil.showRoundImage(getActivity(), mHeadPic, UserInfoCache.getHeadPic(getContext()), R.drawable.default_head);
+        }
+    }
 }

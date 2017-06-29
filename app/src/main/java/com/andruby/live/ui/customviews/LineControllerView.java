@@ -30,13 +30,13 @@ public class LineControllerView extends LinearLayout {
     public LineControllerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.view_line_controller, this);
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TCLineView, 0, 0);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LineView, 0, 0);
         try {
-            name = ta.getString(R.styleable.TCLineView_name);
-            content = ta.getString(R.styleable.TCLineView_content);
-            isBottom = ta.getBoolean(R.styleable.TCLineView_isBottom, false);
-            canNav = ta.getBoolean(R.styleable.TCLineView_canNav,false);
-            isSwitch = ta.getBoolean(R.styleable.TCLineView_isSwitch,false);
+            name = ta.getString(R.styleable.LineView_name);
+            content = ta.getString(R.styleable.LineView_content);
+            isBottom = ta.getBoolean(R.styleable.LineView_isBottom, false);
+            canNav = ta.getBoolean(R.styleable.LineView_canNav,false);
+            isSwitch = ta.getBoolean(R.styleable.LineView_isSwitch,false);
             setUpView();
         } finally {
             ta.recycle();

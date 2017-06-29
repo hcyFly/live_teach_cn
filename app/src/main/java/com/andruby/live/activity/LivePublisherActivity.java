@@ -4,14 +4,17 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,12 +37,18 @@ import com.andruby.live.adapter.ChatMsgListAdapter;
 import com.andruby.live.adapter.UserAvatarListAdapter;
 import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.model.ChatEntity;
+import com.andruby.live.model.GiftInfo;
+import com.andruby.live.model.GiftWithUerInfo;
 import com.andruby.live.model.SimpleUserInfo;
+import com.andruby.live.model.UserInfoCache;
 import com.andruby.live.presenter.IMChatPresenter;
+import com.andruby.live.presenter.LiveGiftPresenter;
 import com.andruby.live.presenter.PusherPresenter;
 import com.andruby.live.presenter.SwipeAnimationController;
 import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
+import com.andruby.live.presenter.ipresenter.ILiveGiftPresenter;
 import com.andruby.live.presenter.ipresenter.IPusherPresenter;
+import com.andruby.live.service.LiveGiftServices;
 import com.andruby.live.ui.customviews.EndDetailFragment;
 import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
@@ -48,6 +58,7 @@ import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
 import com.tencent.TIMMessage;
+import com.tencent.imcore.MemberInfo;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.audio.TXAudioPlayer;
@@ -65,7 +76,7 @@ import java.util.TimerTask;
  * @date: 2016年7月8日 下午4:46:44
  */
 public class LivePublisherActivity extends IMBaseActivity implements View.OnClickListener,
-        IPusherPresenter.IPusherView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener {
+        IPusherPresenter.IPusherView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener,UserAvatarListAdapter.OnItemClickListener {
     private static final String TAG = LivePublisherActivity.class.getSimpleName();
 
 
@@ -135,6 +146,23 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     //直播背景
     private ImageView ivLiveBg;
 
+    //礼物显示
+    private FrameLayout mGiftRootView;
+    private LiveGiftServices.LiveGiftShowBinder mLiveGiftShowBinder;
+    private ServiceConnection mGiftConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mLiveGiftShowBinder = (LiveGiftServices.LiveGiftShowBinder) service;
+            mLiveGiftShowBinder.initGiftShowManager(mContext, mGiftRootView);
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
     @Override
     protected void setBeforeLayout() {
         super.setBeforeLayout();
@@ -154,6 +182,13 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         mNickName = intent.getStringExtra(Constants.USER_NICK);
         mLocation = intent.getStringExtra(Constants.USER_LOC);
         mIsRecord = intent.getBooleanExtra(Constants.IS_RECORD, false);
+    }
+
+    private void initGift() {
+        mGiftRootView = obtainView(R.id.liveGiftLayout);
+        Intent intent = new Intent(this, LiveGiftServices.class);
+        bindService(intent, mGiftConn, BIND_AUTO_CREATE);
+
     }
 
     @Override
@@ -188,6 +223,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         tvBroadcastTime.setText(String.format(Locale.US, "%s", "00:00:00"));
         ivRecordBall = obtainView(R.id.iv_record_ball);
         ivHeadIcon = obtainView(R.id.iv_head_icon);
+        ivHeadIcon.setOnClickListener(this);
         OtherUtils.showPicWithUrl(this, ivHeadIcon, ACache.get(this).getAsString("head_pic_small"), R.drawable.default_head);
         tvMemberCount = obtainView(R.id.tv_member_counts);
         tvMemberCount.setText("0");
@@ -212,6 +248,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         mUserAvatarList.setVisibility(View.VISIBLE);
         mAvatarListAdapter = new UserAvatarListAdapter(this, ACache.get(this).getAsString("user_id"));
         mUserAvatarList.setAdapter(mAvatarListAdapter);
+        mAvatarListAdapter.setOnItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mUserAvatarList.setLayoutManager(linearLayoutManager);
@@ -237,6 +274,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         if (!TextUtils.isEmpty(headPic)) {
             OtherUtils.blurBgPic(this, ivLiveBg, ACache.get(this).getAsString("head_pic"), R.drawable.bg);
         }
+        initGift();
     }
 
     @Override
@@ -344,6 +382,15 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
 
     }
 
+    @Override
+    public void handleGift(GiftWithUerInfo giftWithUerInfo) {
+        if (giftWithUerInfo != null) {
+            mLiveGiftShowBinder.dispatchGift(giftWithUerInfo);
+            refreshMsg(giftWithUerInfo.getUserInfo().getUserId(), giftWithUerInfo.getUserInfo().getNickname(),
+                    "送出" + giftWithUerInfo.getGiftInfo().getGiftCount() + giftWithUerInfo.getGiftInfo().getGiftName(), Constants.AVIMCMD_GIFT);
+        }
+    }
+
     /**
      * 关闭红点与计时动画
      */
@@ -361,6 +408,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     }
 
     private void stopPublish() {
+        Log.i(TAG, "stopPublish: ");
         stopRecordAnimation();
         if (mPusherPresenter != null) {
             mPusherPresenter.changeLiveStatus(mUserId, PusherPresenter.LIVE_STATUS_OFFLINE);
@@ -384,7 +432,9 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         mTXCloudVideoView.onResume();
         if (mPasuing) {
             mPasuing = false;
-            mPusherPresenter.resumePusher();
+            if (mPusherPresenter != null) {
+                mPusherPresenter.resumePusher();
+            }
             mIMChatPresenter.sendMessage(Constants.AVIMCMD_HOST_BACK, "");
         }
     }
@@ -409,13 +459,16 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mGiftConn != null) {
+            unbindService(mGiftConn);
+        }
         mTXCloudVideoView.onDestroy();
         stopPublish();
     }
 
     @Override
     public void onBackPressed() {
-        showComfirmDialog(getString(R.string.msg_stop_push_error),false);
+        showComfirmDialog(getString(R.string.msg_stop_push_error), false);
     }
 
     @Override
@@ -430,6 +483,10 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
             case R.id.btn_setting:
                 //setting坐标
                 mPusherPresenter.showSettingPopupWindow(btnSettingView, mSettingLocation);
+                break;
+            case R.id.iv_head_icon:
+                SimpleUserInfo userInfo = new SimpleUserInfo(UserInfoCache.getUserId(this), UserInfoCache.getNickname(this), UserInfoCache.getHeadPic(this));
+                mPusherPresenter.showUserInfo(this, userInfo);
                 break;
         }
 
@@ -595,6 +652,11 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         });
     }
 
+    @Override
+    public void onItemClickListener(SimpleUserInfo userInfo) {
+        mPusherPresenter.showUserInfo(this, userInfo);
+    }
+
 
     class BroadcastTimerTask extends TimerTask {
 
@@ -628,7 +690,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     stopPublish();
-                    EndDetailFragment.invoke(getFragmentManager(),mSecond, mPraiseCount,mTotalCount);
+                    EndDetailFragment.invoke(getFragmentManager(), mSecond, mPraiseCount, mTotalCount);
                 }
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -639,7 +701,6 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
             });
         } else {
             //当情况为错误的时候，直接停止推流
-            stopPublish();
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
