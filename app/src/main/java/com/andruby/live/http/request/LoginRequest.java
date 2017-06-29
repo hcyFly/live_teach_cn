@@ -14,10 +14,22 @@ import java.lang.reflect.Type;
  */
 public class LoginRequest extends IRequest {
 
-	public LoginRequest(int requestId, String userName, String password) {
+	public static  final int LOGIN_TYPE_ORDING =1;
+	public static  final int LOGIN_TYPE_CNIAO =2;
+	/**
+	 *
+	 * @param requestId
+	 * @param userName
+	 * @param password
+	 * @param loginTpe  1 普通 2 菜鸟
+	 */
+	public LoginRequest(int requestId, String userName, String password,int loginTpe) {
 		mRequestId = requestId;
-		mParams.put("action", "login");//普通账号登录
-//		mParams.put("action", "loginCniaow");//发起直播需要调用这个接口，使用菜鸟窝账号并且购买了直播课程
+		if(loginTpe==LOGIN_TYPE_ORDING){
+			mParams.put("action", "login");//普通账号登录
+		}else if(loginTpe==LOGIN_TYPE_CNIAO){
+			mParams.put("action", "loginCniaow");//发起直播需要调用这个接口，使用菜鸟窝账号并且购买了直播课程
+		}
 		mParams.put("userName", userName);
 		if (mParams.getUrlParams("action").equals("loginCniaow")) {
 			mParams.put("password", CipherUtil.getAESInfo(password));

@@ -1,8 +1,6 @@
 package com.andruby.live.presenter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,19 +9,21 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.andruby.live.R;
-import com.andruby.live.base.BaseView;
 import com.andruby.live.http.AsyncHttp;
 import com.andruby.live.http.request.CreateLiveRequest;
 import com.andruby.live.http.request.RequestComm;
 import com.andruby.live.http.response.CreateLiveResp;
 import com.andruby.live.http.response.Response;
 import com.andruby.live.presenter.ipresenter.IPusherPresenter;
-import com.andruby.live.utils.LogUtil;
+import com.andruby.live.ui.customviews.BeautyDialogFragment;
+import com.andruby.live.ui.customviews.FilterDialogFragment;
+import com.andruby.live.utils.OtherUtils;
+import com.andruby.live.utils.ToastUtils;
 import com.andruby.live.utils.UIUtils;
 import com.tencent.rtmp.ITXLivePushListener;
-import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.TXLivePusher;
 import com.tencent.rtmp.ui.TXCloudVideoView;
@@ -32,7 +32,7 @@ import com.tencent.rtmp.ui.TXCloudVideoView;
  * Created by zhao on 2017/3/2.
  */
 
-public class PusherPresenter extends IPusherPresenter implements ITXLivePushListener {
+public class PusherPresenter extends IPusherPresenter implements ITXLivePushListener, BeautyDialogFragment.SeekBarCallback,FilterDialogFragment.FilterCallback{
 
     private IPusherView mPusherView;
     private TXLivePusher mTXLivePusher;
@@ -44,10 +44,22 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
     private int mLocY;
 
     private boolean mFlashOn = false;
+    private BeautyDialogFragment mBeautyDialogFragment;
+    private FilterDialogFragment mFilterDialogFragment;
+
+    private int mBeautyLevel;
+    private int mWhiteLevel;
+    private boolean isBeauty;
 
     public PusherPresenter(IPusherView baseView) {
         super(baseView);
         mPusherView = baseView;
+        mBeautyDialogFragment = new BeautyDialogFragment();
+        mBeautyDialogFragment.setSeekBarListener(this);
+
+
+        mFilterDialogFragment = new FilterDialogFragment();
+        mFilterDialogFragment.setFilterCallback(this);
     }
 
     @Override
@@ -144,8 +156,40 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
                     mTXLivePusher.switchCamera();
                 }
             });
+
+            contentView.findViewById(R.id.ll_live_setting_beauty).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSettingPopup.dismiss();
+                    //beautyLevel:0-9,默认为0，不开启美颜
+                    //whiteLevel 0-3,默认为0，不开启美白
+
+                    if (isBeauty) {
+                        mTXLivePusher.setBeautyFilter(0, 0);
+                        isBeauty = !isBeauty;
+                    } else {
+                        if (!mTXLivePusher.setBeautyFilter(7, 3)) {
+                            ToastUtils.makeText(mPusherView.getContext(), R.string.beauty_disenable, Toast.LENGTH_SHORT);
+                        } else {
+                            isBeauty = !isBeauty;
+                        }
+                    }
+//                    mBeautyDialogFragment.show(mPusherView.getFragmentMgr(), "");
+
+                }
+            });
+
+            contentView.findViewById(R.id.ll_live_setting_filter).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSettingPopup.dismiss();
+                    mFilterDialogFragment.show(mPusherView.getFragmentMgr(),"");
+                }
+            });
+
+
             mSettingPopup = new PopupWindow(contentView, UIUtils.formatDipToPx(mPusherView.getContext(),
-                    100), UIUtils.formatDipToPx(mPusherView.getContext(), 85));
+                    100), UIUtils.formatDipToPx(mPusherView.getContext(), 170));
             mSettingPopup.setFocusable(true);
             mSettingPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             mLocX = location[0] - (mSettingPopup.getWidth() - targetView
@@ -180,5 +224,23 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
     @Override
     public void onNetStatus(Bundle bundle) {
 //网络变化后的回调
+    }
+
+    @Override
+    public void onProgressChanged(int progress, int state) {
+        switch (state) {
+            case BeautyDialogFragment.STATE_BEAUTY:
+                mBeautyLevel = OtherUtils.filtNumber(9, 100, progress);
+                break;
+            case BeautyDialogFragment.STATE_WHITE:
+                mWhiteLevel = OtherUtils.filtNumber(3, 100, progress);
+                break;
+        }
+        mTXLivePusher.setBeautyFilter(mBeautyLevel, mWhiteLevel);
+    }
+
+    @Override
+    public void setFilter(Bitmap filterBitmap) {
+        mTXLivePusher.setFilter(filterBitmap);
     }
 }

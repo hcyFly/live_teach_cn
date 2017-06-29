@@ -1,12 +1,15 @@
 package com.andruby.live.activity;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +25,7 @@ import com.andruby.live.presenter.PusherPresenter;
 import com.andruby.live.presenter.SwipeAnimationController;
 import com.andruby.live.presenter.ipresenter.IPusherPresenter;
 import com.andruby.live.utils.Constants;
+import com.andruby.live.utils.HWSupportList;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.ToastUtils;
 import com.tencent.TIMGroupManager;
@@ -157,13 +161,21 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         mTXPushConfig.setVideoResolution(TXLiveConstants.VIDEO_RESOLUTION_TYPE_540_960);
         mTXPushConfig.setVideoBitrate(1000);
         mTXPushConfig.setVideoFPS(20);
-        mTXPushConfig.setHardwareAcceleration(true);
+        Log.i(TAG, "startPublish: MANUFACTURER " + Build.MANUFACTURER + " model:"+Build.MODEL);
+        if(HWSupportList.isHWVideoEncodeSupport()){
+            mTXPushConfig.setHardwareAcceleration(true);
+            Log.i(TAG, "startPublish: 手机型号硬编码设置成功！！！");
+        }else{
+            Log.i(TAG, "startPublish: 手机型号不支持硬编码！！！");
+        }
+
+        //设置 直播画面水印 位置
+        mTXPushConfig.setWatermark(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher),50,50);
         //切后台推流图片
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pause_publish, options);
         mTXPushConfig.setPauseImg(bitmap);
-
         mPusherPresenter.startPusher(mTXCloudVideoView, mTXPushConfig, mPushUrl);
 
     }
@@ -266,7 +278,6 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
         super.onDestroy();
         mTXCloudVideoView.onDestroy();
         stopPublish();
-        TXRtmpApi.setRtmpDataListener(null);
     }
 
     @Override
@@ -341,4 +352,10 @@ public class LivePublisherActivity extends LiveBaseActivity implements View.OnCl
     public Context getContext() {
         return this;
     }
+
+    @Override
+    public FragmentManager getFragmentMgr() {
+        return getFragmentManager();
+    }
+
 }

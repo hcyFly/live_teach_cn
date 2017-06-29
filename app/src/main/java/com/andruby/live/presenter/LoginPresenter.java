@@ -113,9 +113,9 @@ public class LoginPresenter extends ILoginPresenter implements IMLogin.IMLoginLi
 	}
 
 	@Override
-	public void usernameLogin(final String userName, final String password) {
+	public void usernameLogin(final String userName, final String password,int loginType) {
 		if (checkUserNameLogin(userName, password)) {
-			LoginRequest req = new LoginRequest(RequestComm.login, userName, password);
+			LoginRequest req = new LoginRequest(RequestComm.register, userName, password,loginType);
 			AsyncHttp.instance().postJson(req, new AsyncHttp.IHttpListener() {
 				@Override
 				public void onStart(int requestId) {

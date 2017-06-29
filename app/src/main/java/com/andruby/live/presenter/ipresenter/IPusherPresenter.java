@@ -1,5 +1,6 @@
 package com.andruby.live.presenter.ipresenter;
 
+import android.app.FragmentManager;
 import android.view.View;
 
 import com.andruby.live.base.BasePresenter;
@@ -39,6 +40,8 @@ public abstract class IPusherPresenter implements BasePresenter {
          * @param errorCode 0表示成功 1表示失败
          */
         void onGetPushUrl(String pushUrl, int errorCode);
+
+        FragmentManager getFragmentMgr();
     }
 
 }

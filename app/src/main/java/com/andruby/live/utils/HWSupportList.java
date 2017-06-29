@@ -140,7 +140,8 @@ public class HWSupportList {
                     "Lenovo|K900\n" +
                     "Letv|X900+\n" +
                     "Letv|X500\n" +
-                    "Letv|X501\n";
+                    "Letv|X500\n" +
+                    "motorola|XT1085\n";
     public static boolean isHWVideoEncodeSupport(){
         if(Build.VERSION.SDK_INT < 16){
             return false;

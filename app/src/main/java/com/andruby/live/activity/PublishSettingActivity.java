@@ -25,6 +25,7 @@ import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.presenter.PublishSettingPresenter;
 import com.andruby.live.presenter.ipresenter.IPublishSettingPresenter;
 import com.andruby.live.ui.customviews.CustomSwitch;
+import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
@@ -88,7 +89,7 @@ public class PublishSettingActivity extends LiveBaseActivity implements View.OnC
 	protected void initData() {
 		mPublishSettingPresenter = new PublishSettingPresenter(this);
 		mPermission = mPublishSettingPresenter.checkPublishPermission(this);
-		String strCover = UserInfoMgr.getInstance().getCoverPic();
+		String strCover = ACache.get(this).getAsString("head_pic");
 		if (!TextUtils.isEmpty(strCover)) {
 			Glide.with(this).load(strCover).into(cover);
 			tvPicTip.setVisibility(View.GONE);

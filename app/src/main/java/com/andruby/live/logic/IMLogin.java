@@ -128,41 +128,6 @@ public class IMLogin {
 		this.mTCSmsCallback = null;
 	}
 
-	/**
-	 * tls用户名登录
-	 *
-	 * @param username 用户名
-	 * @param password 密码
-	 */
-	public void pwdLogin(String username, String password) {
-		LoginRequest req = new LoginRequest(RequestComm.register, username, password);
-		AsyncHttp.instance().postJson(req, new AsyncHttp.IHttpListener() {
-			@Override
-			public void onStart(int requestId) {
-
-			}
-
-			@Override
-			public void onSuccess(int requestId, Response response) {
-				LogUtil.e(TAG,"pwdLogin suceess");
-				if (response.status == RequestComm.SUCCESS) {
-					UserInfo info = (UserInfo) response.data;
-					imLogin(info.userId, info.sigId);
-				} else {
-					if (null != mIMLoginListener) {
-						mIMLoginListener.onFailure(0, "登陆失败:" + response.msg);
-					}
-				}
-			}
-
-			@Override
-			public void onFailure(int requestId, int httpStatus, Throwable error) {
-				if (null != mIMLoginListener) {
-					mIMLoginListener.onFailure(httpStatus, error.getMessage());
-				}
-			}
-		});
-	}
 
 	/**
 	 * 检查是否存在缓存，若存在则登录，反之回调onFailure
@@ -175,7 +140,6 @@ public class IMLogin {
 		}
 		return true;
 	}
-
 
 	/**
 	 * imsdk登录接口，与tls登录验证成功后调用

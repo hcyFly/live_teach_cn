@@ -1,6 +1,7 @@
 package com.andruby.live.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.andruby.live.R;
+import com.andruby.live.presenter.LivePlayerPresenter;
+import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
 import com.tencent.rtmp.ITXLivePlayListener;
@@ -20,7 +23,7 @@ import com.tencent.rtmp.ui.TXCloudVideoView;
  * @author: Andruby
  * @date: 2016年7月8日 下午4:46:44
  */
-public class LivePlayerActivity extends LiveBaseActivity implements View.OnClickListener {
+public class LivePlayerActivity extends LiveBaseActivity implements View.OnClickListener, ILivePlayerPresenter.ILivePlayerView {
 
     private static final String TAG = LivePlayerActivity.class.getSimpleName();
 
@@ -33,6 +36,7 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
     private boolean mPlaying = false;
 
     public final static int LIVE_PLAYER_REQUEST_CODE = 1000;
+    private LivePlayerPresenter mLivePlayerPresenter;
 
     @Override
     protected void setBeforeLayout() {
@@ -55,27 +59,14 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
 
         //mPlayerView即step1中添加的界面view
         mTXCloudVideoView = obtainView(R.id.video_view);
-//创建player对象
-        mTXLivePlayer = new TXLivePlayer(this);
-        //必须添加播放监听 hcy
-        mTXLivePlayer.setPlayListener(new ITXLivePlayListener() {
-            @Override
-            public void onPlayEvent(int i, Bundle bundle) {
-                //播放事件逻辑
-            }
-
-            @Override
-            public void onNetStatus(Bundle bundle) {
-                //处理网络状态相关
-            }
-        });
-//关键player对象与界面view
-        mTXLivePlayer.setPlayerView(mTXCloudVideoView);
-
+        mLivePlayerPresenter = new LivePlayerPresenter(this);
+        mTXPlayConfig.setConnectRetryCount(3);
+        mTXPlayConfig.setConnectRetryInterval(3);
+        mLivePlayerPresenter.initPlayerView(mTXCloudVideoView, mTXPlayConfig);
 
         mPlayUrl = getIntent().getStringExtra(Constants.PLAY_URL);
         if (mPlayUrl != null) {
-            mTXLivePlayer.startPlay(mPlayUrl, TXLivePlayer.PLAY_TYPE_LIVE_FLV); //推荐FLV
+            mLivePlayerPresenter.startPlay(mPlayUrl, TXLivePlayer.PLAY_TYPE_LIVE_FLV); //推荐FLV
         } else {
             showToast("play url is empty");
         }
@@ -119,13 +110,13 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
     @Override
     protected void onPause() {
         super.onPause();
-        mTXLivePlayer.pause();
+        mLivePlayerPresenter.playerPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mTXLivePlayer.resume();
+        mLivePlayerPresenter.playerResume();
     }
 
     @Override
@@ -136,8 +127,7 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTXLivePlayer.stopPlay(true);
-        mTXCloudVideoView.onDestroy();
+        mLivePlayerPresenter.stopPlay(true);
     }
 
     public static void invoke(Activity activity, String playUrl) {
@@ -146,4 +136,38 @@ public class LivePlayerActivity extends LiveBaseActivity implements View.OnClick
         activity.startActivityForResult(intent, LIVE_PLAYER_REQUEST_CODE);
     }
 
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showMsg(String msg) {
+
+    }
+
+    @Override
+    public void showMsg(int msg) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void onPlayEvent(int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onNetStatus(Bundle bundle) {
+
+    }
 }

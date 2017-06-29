@@ -31,4 +31,5 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.ctiao:dfm:0.4.4'
     compile 'com.zhy:okhttputils:2.6.2'
+    compile files('libs/txrtmpsdk_1.9.1.2088.jar')
 }

@@ -232,6 +232,8 @@
     <string name="live_setting_beauty_open">开美颜</string>
     <string name="live_setting_beauty_close">关美颜</string>
     <string name="live_setting_music">音效</string>
+    <string name="live_setting_filter">滤镜</string>
+
     <string name="live_follow_author">关注主播</string>
     <string name="live_fore_finish">发起个人直播</string>
     <string name="live_join_live">&#160;来了</string>
@@ -271,4 +273,5 @@
     <string name="rtmp_play_error">视频流播放失败，Error:</string>
     <string name="msg_stop_push_error">当前正在直播，是否退出直播？</string>
     <string name="live_cover_upload_failed">直播封面上传失败</string>
+    <string name="beauty_disenable">手机不支持美颜效果！</string>
 </resources>
