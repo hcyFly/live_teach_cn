@@ -120,7 +120,7 @@
             android:name=".activity.MessegeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.SearchActivity"
+            android:name=".activity.ReviewPlayActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.FanceActivity"
@@ -130,6 +130,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PersonCenterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.ReviewListActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ScreenRecordActivity"

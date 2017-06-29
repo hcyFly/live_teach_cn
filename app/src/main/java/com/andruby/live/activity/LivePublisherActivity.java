@@ -76,7 +76,7 @@ import java.util.TimerTask;
  * @date: 2016年7月8日 下午4:46:44
  */
 public class LivePublisherActivity extends IMBaseActivity implements View.OnClickListener,
-        IPusherPresenter.IPusherView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener,UserAvatarListAdapter.OnItemClickListener {
+        IPusherPresenter.IPusherView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener, UserAvatarListAdapter.OnItemClickListener {
     private static final String TAG = LivePublisherActivity.class.getSimpleName();
 
 
@@ -313,7 +313,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
             //获取推流地址
             LogUtil.e(TAG, "onJoin group success" + msg);
             mGroupId = msg;
-            mPusherPresenter.getPusherUrl(mUserId, msg, mTitle, mCoverPicUrl, mNickName, mHeadPicUrl, mLocation);
+            mPusherPresenter.getPusherUrl(mUserId, msg, mTitle, mCoverPicUrl, mNickName, mHeadPicUrl, mLocation, mIsRecord);
         } else if (Constants.NO_LOGIN_CACHE == code) {
             LogUtil.e(TAG, "onJoin group failed" + msg);
         } else {

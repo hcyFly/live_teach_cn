@@ -73,8 +73,8 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
     }
 
     @Override
-    public void getPusherUrl(String userId, String groupId, String title, String coverPic, String nickName, String headPic, String location) {
-        final CreateLiveRequest req = new CreateLiveRequest(RequestComm.createLive, userId, groupId, title, coverPic, location, 0);
+    public void getPusherUrl(String userId, String groupId, String title, String coverPic, String nickName, String headPic, String location, boolean isRecord) {
+        final CreateLiveRequest req = new CreateLiveRequest(RequestComm.createLive, userId, groupId, title, coverPic, location, isRecord ? 1 : 0);
         AsyncHttp.instance().postJson(req, new AsyncHttp.IHttpListener() {
             @Override
             public void onStart(int requestId) {

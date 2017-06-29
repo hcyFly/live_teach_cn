@@ -24,7 +24,7 @@ public abstract class IPusherPresenter extends ILivePresenter implements BasePre
     }
 
     public abstract void getPusherUrl(final String userId, final String groupId, final String title,
-                                      final String coverPic, final String nickName, final String headPic, final String location);
+                                      final String coverPic, final String nickName, final String headPic, final String location, boolean isRecord);
 
     public abstract void startPusher(TXCloudVideoView videoView, TXLivePushConfig pusherConfig, String pushUrl);
 

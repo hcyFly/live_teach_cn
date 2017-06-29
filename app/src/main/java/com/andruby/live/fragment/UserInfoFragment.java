@@ -11,7 +11,10 @@ import android.widget.TextView;
 
 import com.andruby.live.R;
 import com.andruby.live.activity.EditUseInfoActivity;
+import com.andruby.live.activity.FanceActivity;
+import com.andruby.live.activity.FollowActivity;
 import com.andruby.live.activity.LoginActivity;
+import com.andruby.live.activity.ReviewListActivity;
 import com.andruby.live.logic.IMLogin;
 import com.andruby.live.model.UserInfoCache;
 import com.andruby.live.utils.DeviceUtils;
@@ -97,10 +100,13 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 showAbout();
                 break;
             case R.id.fanceview:
+                FanceActivity.invoke(getContext());
                 break;
             case R.id.followView:
+                FollowActivity.invoke(getContext());
                 break;
             case R.id.review:
+                ReviewListActivity.invoke(getContext());
                 break;
         }
     }
