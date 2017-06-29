@@ -2,6 +2,7 @@ package com.andruby.live.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ import com.andruby.live.model.GiftWithUerInfo;
 import com.andruby.live.model.LiveInfo;
 import com.andruby.live.model.LiveUserInfo;
 import com.andruby.live.model.SimpleUserInfo;
+import com.andruby.live.presenter.GiftShowManager;
 import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.LiveGiftPresenter;
 import com.andruby.live.presenter.LivePlayerPresenter;
@@ -122,6 +125,20 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     //礼物服务
     private FrameLayout mGiftRootView;
+    private LiveGiftServices.LiveGiftShowBinder mLiveGiftShowBinder;
+    private ServiceConnection mGiftConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mLiveGiftShowBinder = (LiveGiftServices.LiveGiftShowBinder) service;
+            mLiveGiftShowBinder.initGiftShowManager(mContext, mGiftRootView);
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     @Override
     protected void setBeforeLayout() {
@@ -209,6 +226,12 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mLiveGiftPresenter.giftList(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId);
         mLiveGiftPresenter.coinCount(ACache.get(this).getAsString("user_id"));
 
+//        showManager = new GiftShowManager(this, (LinearLayout) obtainView(R.id.live_gift_con1));
+//        showManager.startGetGift();
+//        showManager.setShowGiftManagerIsEmptyListener(this);
+
+        Intent intent = new Intent(this, LiveGiftServices.class);
+        bindService(intent, mGiftConn, BIND_AUTO_CREATE);
 
     }
 
@@ -306,6 +329,9 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mGiftConn != null) {
+            unbindService(mGiftConn);
+        }
         stopPlay();
     }
 
@@ -497,6 +523,15 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         stopPlay();
     }
 
+    @Override
+    public void handleGift(GiftWithUerInfo giftWithUerInfo) {
+        if (giftWithUerInfo != null) {
+            mLiveGiftShowBinder.dispatchGift(giftWithUerInfo);
+            refreshMsg(giftWithUerInfo.getUserInfo().getUserId(), giftWithUerInfo.getUserInfo().getNickname(),
+                    "送出" + giftWithUerInfo.getGiftInfo().getGiftCount() + giftWithUerInfo.getGiftInfo().getGiftName(), Constants.AVIMCMD_GIFT);
+        }
+    }
+
     /**
      * 刷新消息列表
      *
@@ -588,6 +623,17 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void receiveGift(boolean showGift, GiftWithUerInfo giftWithUerInfo) {
+        mLiveGiftShowBinder.dispatchGift(giftWithUerInfo);
+        mIMChatPresenter.sendGiftMessage(mGson.toJson(giftWithUerInfo));
+    }
+
+    @Override
+    public void sendGiftFailed() {
+        ToastUtils.makeText(this, "gift send failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showSenderInfoCard(MemberInfo currentMember) {
 
     }
@@ -606,18 +652,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     @Override
     public void onGiftListFailed() {
-        ToastUtils.makeText(this, "get gift list error", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void sendGiftFailed() {
-        ToastUtils.makeText(this, "send gift failed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void receiveGift(boolean show, GiftWithUerInfo giftWithUerInfo) {
-        ToastUtils.makeText(this, "send gift success", Toast.LENGTH_SHORT).show();
-        mIMChatPresenter.sendGiftMessage(mGson.toJson(giftWithUerInfo));
+        ToastUtils.makeText(this, "get gift list error", Toast.LENGTH_SHORT);
     }
 
 
@@ -638,7 +673,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     @Override
     public void sendGift(GiftInfo giftInfo) {
-        mLiveGiftPresenter.sendGift(giftInfo,mLiveInfo.userInfo.userId,mLiveInfo.liveId);
+        mLiveGiftPresenter.sendGift(giftInfo, ACache.get(this).getAsString("user_id"), mLiveInfo.liveId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.andruby.live.ui.gift;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.andruby.live.R;
 import com.andruby.live.adapter.GiftPagerAdapter;
+import com.andruby.live.adapter.LiveGiftAdapter;
 import com.andruby.live.model.GiftInfo;
 import com.andruby.live.ui.customviews.BallSpinLoadingView;
 import com.bumptech.glide.Glide;
@@ -334,7 +336,6 @@ public class LiveGiftView extends LinearLayout implements View.OnClickListener,
             return false;
         }
         sybCount -= totalPrice;
-        mTvBalance.setText(sybCount+"");
         return true;
     }
 

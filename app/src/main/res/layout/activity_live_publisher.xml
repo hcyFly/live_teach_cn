@@ -102,5 +102,8 @@
             android:transcriptMode="normal"/>
     </RelativeLayout>
 
+    <include
+        android:id="@+id/liveGiftLayout"
+        layout="@layout/live_gifts_layout" />
 
 </RelativeLayout>
