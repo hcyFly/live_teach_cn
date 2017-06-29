@@ -208,7 +208,7 @@ public class LiveListFragment extends BaseFragment implements SwipeRefreshLayout
         }
         mSwipeRefreshLayout.setRefreshing(false);
         if (!mLiveListPresenter.isHasMore()) {
-            mListFootView.setLoadDone();
+            mVideoListView.removeFooterView(mListFootView);
         }
     }
 

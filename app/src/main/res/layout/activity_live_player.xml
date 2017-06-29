@@ -7,13 +7,13 @@
     tools:ignore="contentDescription">
 
 
-
     <com.tencent.rtmp.ui.TXCloudVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:visibility="gone" />
+
     <ImageView
         android:id="@+id/iv_live_bg"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/layout_live_pusher_info"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/tool_bar"
@@ -55,6 +55,15 @@
                 android:layout_height="@dimen/live_btn_size"
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/icon_message"
+                android:onClick="onClick" />
+
+            <ImageView
+                android:id="@+id/btn_gift"
+                android:layout_width="@dimen/live_btn_size"
+                android:layout_height="@dimen/live_btn_size"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/btn_message_input"
+                android:background="@drawable/live_btn_gift_selector"
                 android:onClick="onClick" />
 
             <ImageView
@@ -104,4 +113,8 @@
             android:stackFromBottom="true"
             android:transcriptMode="normal" />
     </RelativeLayout>
+
+    <include
+        android:id="@+id/liveGiftLayout"
+        layout="@layout/live_gifts_layout" />
 </RelativeLayout>

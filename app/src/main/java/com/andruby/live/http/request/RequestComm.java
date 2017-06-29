@@ -36,4 +36,6 @@ public class RequestComm {
     public static final int live_list = 138;
     public static final int live_list_more = 139;
 
+    public static final int coin_count = 140;
+
 }

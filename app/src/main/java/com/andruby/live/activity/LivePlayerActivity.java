@@ -2,10 +2,13 @@ package com.andruby.live.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,8 +17,10 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,21 +31,30 @@ import com.andruby.live.adapter.UserAvatarListAdapter;
 import com.andruby.live.logic.FrequeMgr;
 import com.andruby.live.logic.IMLogin;
 import com.andruby.live.model.ChatEntity;
+import com.andruby.live.model.GiftInfo;
+import com.andruby.live.model.GiftWithUerInfo;
 import com.andruby.live.model.LiveInfo;
+import com.andruby.live.model.LiveUserInfo;
 import com.andruby.live.model.SimpleUserInfo;
 import com.andruby.live.presenter.IMChatPresenter;
+import com.andruby.live.presenter.LiveGiftPresenter;
 import com.andruby.live.presenter.LivePlayerPresenter;
 import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
+import com.andruby.live.presenter.ipresenter.ILiveGiftPresenter;
 import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
+import com.andruby.live.service.LiveGiftServices;
 import com.andruby.live.ui.customviews.EndDetailFragment;
 import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
+import com.andruby.live.ui.gift.LiveGiftView;
 import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
+import com.google.gson.Gson;
 import com.tencent.TIMMessage;
+import com.tencent.imcore.MemberInfo;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePlayConfig;
 import com.tencent.rtmp.TXLivePlayer;
@@ -55,7 +69,8 @@ import java.util.Locale;
  * @date: 2016年7月8日 下午4:46:44
  */
 public class LivePlayerActivity extends IMBaseActivity implements View.OnClickListener,
-        ILivePlayerPresenter.ILivePlayerView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener {
+        ILivePlayerPresenter.ILivePlayerView, IIMChatPresenter.IIMChatView, InputTextMsgDialog.OnTextSendListener,
+        ILiveGiftPresenter.ILiveGiftView, LiveGiftView.LiveGiftViewListener {
 
     private static final String TAG = LivePlayerActivity.class.getSimpleName();
     public final static int LIVE_PLAYER_REQUEST_CODE = 1000;
@@ -96,8 +111,17 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     private int mJoinCount = 0;
     private boolean mOfficialMsgSended = false;
-
+    //背景
     private ImageView ivLiveBg;
+
+    //礼物
+    private LiveGiftView mLiveGiftView;
+    private LiveGiftPresenter mLiveGiftPresenter;
+    private Gson mGson = new Gson();
+    private boolean isGifViewShowing;
+
+    //礼物服务
+    private FrameLayout mGiftRootView;
 
     @Override
     protected void setBeforeLayout() {
@@ -162,6 +186,8 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mUserAvatarList.setLayoutManager(linearLayoutManager);
 
         ivLiveBg = obtainView(R.id.iv_live_bg);
+
+        initGift();
     }
 
     @Override
@@ -170,6 +196,20 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         if (!TextUtils.isEmpty(headPic)) {
             OtherUtils.blurBgPic(this, ivLiveBg, ACache.get(this).getAsString("head_pic"), R.drawable.bg);
         }
+    }
+
+    private void initGift() {
+        mLiveGiftView = obtainView(R.id.live_gift_view);
+        mGiftRootView = obtainView(R.id.liveGiftLayout);
+
+        mLiveGiftView.initLiveGiftView(this, (RelativeLayout) obtainView(R.id.gift_item_layout));
+        mLiveGiftView.setCoinCount(100000);
+
+        mLiveGiftPresenter = new LiveGiftPresenter(this);
+        mLiveGiftPresenter.giftList(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId);
+        mLiveGiftPresenter.coinCount(ACache.get(this).getAsString("user_id"));
+
+
     }
 
     private void getDataFormIntent() {
@@ -221,7 +261,9 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
                 }
                 Log.i(TAG, "onClick: sendPraiseMessage");
                 break;
-
+            case R.id.btn_gift:
+                mLiveGiftView.show();
+                break;
             default:
                 break;
         }
@@ -397,11 +439,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     public void onGroupDeleteResult() {
         stopPlay();
-        long second = 0;
-        if (mLiveStartTime != 0) {
-            second = (System.currentTimeMillis() - mLiveStartTime) / 1000;
-        }
-        EndDetailFragment.invoke(getFragmentManager(), second, mPraiseCount, mTotalCount);
+        showEndDetail();
     }
 
     @Override
@@ -432,7 +470,6 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     public void handleEnterLiveMsg(SimpleUserInfo userInfo) {
         Log.i(TAG, "handleEnterLiveMsg: ");
         //更新观众列表，观众进入显示
-
         if (!mAvatarListAdapter.addItem(userInfo))
             return;
 
@@ -518,11 +555,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     stopPlay();
-                    long second = 0;
-                    if (mLiveStartTime != 0) {
-                        second = (System.currentTimeMillis() - mLiveStartTime) / 1000;
-                    }
-                    EndDetailFragment.invoke(getFragmentManager(), second, mPraiseCount, mTotalCount);
+                    showEndDetail();
                 }
             });
             builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -544,6 +577,68 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showEndDetail() {
+        long second = 0;
+        if (mLiveStartTime != 0) {
+            second = (System.currentTimeMillis() - mLiveStartTime) / 1000;
+        }
+        EndDetailFragment.invoke(getFragmentManager(), second, mPraiseCount, mTotalCount);
+    }
+
+    @Override
+    public void showSenderInfoCard(MemberInfo currentMember) {
+
+    }
+
+    @Override
+    public void onCoinCount(int coinCount) {
+        if (coinCount > 0) {
+            mLiveGiftView.setCoinCount(coinCount);
+        }
+    }
+
+    @Override
+    public void onGiftList(ArrayList<GiftInfo> giftList) {
+        mLiveGiftView.setGiftPagerList(giftList);
+    }
+
+    @Override
+    public void onGiftListFailed() {
+        ToastUtils.makeText(this, "get gift list error", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void sendGiftFailed() {
+        ToastUtils.makeText(this, "send gift failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void receiveGift(boolean show, GiftWithUerInfo giftWithUerInfo) {
+        ToastUtils.makeText(this, "send gift success", Toast.LENGTH_SHORT).show();
+        mIMChatPresenter.sendGiftMessage(mGson.toJson(giftWithUerInfo));
+    }
+
+
+    @Override
+    public void isShowing(boolean isShowing) {
+        isGifViewShowing = isShowing;
+    }
+
+    @Override
+    public void gotoPay() {
+        ToastUtils.makeText(this, "跳转充值界面", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showPayDialog() {
+        mLiveGiftPresenter.showPayDialog();
+    }
+
+    @Override
+    public void sendGift(GiftInfo giftInfo) {
+        mLiveGiftPresenter.sendGift(giftInfo,mLiveInfo.userInfo.userId,mLiveInfo.liveId);
     }
 
 }
