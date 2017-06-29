@@ -6,11 +6,7 @@
     android:layout_height="match_parent"
     tools:ignore="contentDescription">
 
-    <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+
 
     <com.tencent.rtmp.ui.TXCloudVideoView
         android:id="@+id/video_view"
@@ -18,7 +14,11 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:visibility="gone" />
-
+    <ImageView
+        android:id="@+id/iv_live_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
 
     <RelativeLayout
@@ -61,12 +61,12 @@
                 android:id="@+id/btn_like"
                 android:layout_width="@dimen/live_btn_size"
                 android:layout_height="@dimen/live_btn_size"
-                android:layout_toLeftOf="@+id/btn_back"
+                android:layout_toLeftOf="@+id/btn_close"
                 android:background="@drawable/icon_like"
                 android:onClick="onClick" />
 
             <Button
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_close"
                 android:layout_width="@dimen/live_btn_size"
                 android:layout_height="@dimen/live_btn_size"
                 android:layout_alignParentRight="true"

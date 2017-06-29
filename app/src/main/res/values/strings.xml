@@ -272,6 +272,7 @@
     <string name="not_qcloud_link">非腾讯云链接，若要放开限制请联系腾讯云商务团队</string>
     <string name="rtmp_play_error">视频流播放失败，Error:</string>
     <string name="msg_stop_push_error">当前正在直播，是否退出直播？</string>
+    <string name="msg_stop_watch">正在观看直播，是否退出观看？</string>
     <string name="live_cover_upload_failed">直播封面上传失败</string>
     <string name="beauty_disenable">手机不支持美颜效果！</string>
 </resources>

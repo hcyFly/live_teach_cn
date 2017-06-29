@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.andruby.live.R;
 import com.andruby.live.logic.LocationMgr;
-import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.presenter.PublishSettingPresenter;
 import com.andruby.live.presenter.ipresenter.IPublishSettingPresenter;
 import com.andruby.live.ui.customviews.CustomSwitch;
@@ -43,9 +42,9 @@ public class PublishSettingActivity extends IMBaseActivity implements View.OnCli
 		IPublishSettingPresenter.IPublishSettingView, RadioGroup.OnCheckedChangeListener {
 	private static final String TAG = PublishSettingActivity.class.getSimpleName();
 
-	private TextView BtnBack, btnPublish;
+	private TextView btnBack, btnPublish;
 	private Dialog mPicChsDialog;
-	private ImageView cover;
+	private ImageView ivCover;
 	private Uri fileUri, cropUri;
 	private TextView tvPicTip;
 	private TextView tvLBS;
@@ -71,10 +70,10 @@ public class PublishSettingActivity extends IMBaseActivity implements View.OnCli
 	@Override
 	protected void initView() {
 		tvTitle = obtainView(R.id.live_title);
-		BtnBack = obtainView(R.id.btn_cancel);
+		btnBack = obtainView(R.id.btn_cancel);
 		tvPicTip = obtainView(R.id.tv_pic_tip);
 		btnPublish = obtainView(R.id.btn_publish);
-		cover = obtainView(R.id.cover);
+		ivCover = obtainView(R.id.cover);
 		tvLBS = obtainView(R.id.address);
 		tvRecord = obtainView(R.id.tv_record);
 		btnLBS = obtainView(R.id.btn_lbs);
@@ -91,10 +90,10 @@ public class PublishSettingActivity extends IMBaseActivity implements View.OnCli
 		mPermission = mPublishSettingPresenter.checkPublishPermission(this);
 		String strCover = ACache.get(this).getAsString("head_pic");
 		if (!TextUtils.isEmpty(strCover)) {
-			Glide.with(this).load(strCover).into(cover);
+			Glide.with(this).load(strCover).into(ivCover);
 			tvPicTip.setVisibility(View.GONE);
 		} else {
-			cover.setImageResource(R.drawable.publish_background);
+			ivCover.setImageResource(R.drawable.publish_background);
 		}
 	}
 
@@ -103,8 +102,8 @@ public class PublishSettingActivity extends IMBaseActivity implements View.OnCli
 
 		mRGRecordType.setOnCheckedChangeListener(this);
 		mRGBitrate.setOnCheckedChangeListener(this);
-		cover.setOnClickListener(this);
-		BtnBack.setOnClickListener(this);
+		ivCover.setOnClickListener(this);
+		btnBack.setOnClickListener(this);
 		btnPublish.setOnClickListener(this);
 		btnLBS.setOnClickListener(this);
 		btnRecord.setOnClickListener(this);
@@ -252,7 +251,7 @@ public class PublishSettingActivity extends IMBaseActivity implements View.OnCli
 
 	@Override
 	public void doUploadSuceess(String url) {
-		Glide.with(this).load(url).into(cover);
+		Glide.with(this).load(url).into(ivCover);
 	}
 
 	@Override

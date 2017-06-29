@@ -101,12 +101,8 @@ public class LiveListAdapter extends ArrayAdapter<LiveInfo> {
         holder.tvMembers.setText("" + data.viewCount);
         //直播点赞数
         holder.tvAdmires.setText("" + data.likeCount);
-        //视频类型，直播或者回放
-        if (data.type == 0) {
-            holder.ivLogo.setImageResource(R.drawable.icon_live);
-        } else {
-            holder.ivLogo.setImageResource(R.drawable.icon_video);
-        }
+        //直播
+        holder.ivLogo.setImageResource(R.drawable.icon_live);
         return convertView;
     }
 

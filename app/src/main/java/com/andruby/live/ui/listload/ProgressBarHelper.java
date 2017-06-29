@@ -37,7 +37,7 @@ public class ProgressBarHelper {
 	}
 
 	public View loading;
-	TextView tv;
+	TextView tvTipText;
 	ProgressBar progressBar;
 	ProgressBarClickListener pcl;
 	public boolean isLoading = false;
@@ -73,7 +73,7 @@ public class ProgressBarHelper {
 		}
 		if (loading == null)
 			return;
-		tv = (TextView) loading.findViewById(R.id.loading_tip_txt);
+		tvTipText = (TextView) loading.findViewById(R.id.loading_tip_txt);
 		progressBar = (ProgressBar) loading
 				.findViewById(R.id.loading_progress_bar);
 		image = (ImageView) loading.findViewById(R.id.loading_image);
@@ -92,7 +92,7 @@ public class ProgressBarHelper {
 		}
 		if (loading == null)
 			return;
-		tv = (TextView) loading.findViewById(R.id.loading_tip_txt);
+		tvTipText = (TextView) loading.findViewById(R.id.loading_tip_txt);
 		progressBar = (ProgressBar) loading
 				.findViewById(R.id.loading_progress_bar);
 		image = (ImageView) loading.findViewById(R.id.loading_image);
@@ -110,7 +110,7 @@ public class ProgressBarHelper {
 		}
 		if (loading == null)
 			return;
-		tv = (TextView) loading.findViewById(R.id.loading_tip_txt);
+		tvTipText = (TextView) loading.findViewById(R.id.loading_tip_txt);
 		image = (ImageView) loading.findViewById(R.id.loading_image);
 		if (image.getDrawable() instanceof AnimationDrawable)
 			((AnimationDrawable) image.getDrawable()).start();
@@ -127,7 +127,7 @@ public class ProgressBarHelper {
 		context.runOnUiThread(new Runnable() {
 			public void run() {
 				isLoading = false;
-				if (tv != null) {
+				if (tvTipText != null) {
 					setFailure();
 				}
 				if (progressBar != null) {
@@ -166,7 +166,7 @@ public class ProgressBarHelper {
 		context.runOnUiThread(new Runnable() {
 			public void run() {
 				isLoading = false;
-				if (tv != null) {
+				if (tvTipText != null) {
 					setNoData();
 				}
 				if (progressBar != null)
@@ -199,8 +199,8 @@ public class ProgressBarHelper {
 
 	private void setLoading() {
 		isLoading = true;
-		if (tv != null) {
-			tv.setText("");
+		if (tvTipText != null) {
+			tvTipText.setText("");
 		}
 		if (mMode == MODE_LOADING_PROGRESS) {
 			progressBar.setVisibility(View.VISIBLE);
@@ -230,7 +230,7 @@ public class ProgressBarHelper {
 
 	private void setFailure() {
 		isLoading = false;
-		// tv.setText(R.string.srploaded_nocontent);
+		// tvTipText.setText(R.string.srploaded_nocontent);
 		image.setVisibility(View.VISIBLE);
 		image.setImageDrawable(context.getResources().getDrawable(
 				mNetErrorTipImageId));
@@ -253,7 +253,7 @@ public class ProgressBarHelper {
 	private void setNoData() {
 		isLoading = false;
 		image.setVisibility(View.VISIBLE);
-		// tv.setText(R.string.nocontent);
+		// tvTipText.setText(R.string.nocontent);
 		image.setImageDrawable(context.getResources().getDrawable(
 				mNoDateTipImageResId));
 		loading.setEnabled(true);
@@ -290,7 +290,7 @@ public class ProgressBarHelper {
 		context.runOnUiThread(new Runnable() {
 			public void run() {
 				/*
-                 * if (tv != null) tv.setText(R.string.loading_progress_hint);
+                 * if (tvTipText != null) tvTipText.setText(R.string.loading_progress_hint);
 				 * if (loading != null) { loading.setVisibility(View.VISIBLE);
 				 * if (progressBar != null && !progressBar.isShown())
 				 * progressBar.setVisibility(View.VISIBLE); }

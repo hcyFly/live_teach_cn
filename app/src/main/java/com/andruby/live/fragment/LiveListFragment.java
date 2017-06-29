@@ -103,12 +103,15 @@ public class LiveListFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (0 == mLastClickTime || System.currentTimeMillis() - mLastClickTime > 1000) {
-                    LiveInfo item = mVideoListViewAdapter.getItem(i);
-                    if (item == null) {
-                        Log.e(TAG, "live list item is null at icon_position:" + i);
-                        return;
+                    if(mVideoListViewAdapter.getCount()>i){
+                        LiveInfo item = mVideoListViewAdapter.getItem(i);
+                        if (item == null) {
+                            Log.e(TAG, "live list item is null at icon_position:" + i);
+                            return;
+                        }
+                        startLivePlay(item);
                     }
-                    startLivePlay(item);
+
                 }
                 mLastClickTime = System.currentTimeMillis();
 

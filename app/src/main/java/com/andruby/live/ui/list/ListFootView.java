@@ -52,7 +52,6 @@ public class ListFootView extends RelativeLayout {
     }
 
     public void showErrorMsg(String msg) {
-
         mLoadingText.setVisibility(View.INVISIBLE);
         mProgress.setVisibility(View.INVISIBLE);
         mMoreText.setVisibility(VISIBLE);

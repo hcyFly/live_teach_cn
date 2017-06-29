@@ -1,7 +1,9 @@
 package com.andruby.live.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andruby.live.LiveApp;
 import com.andruby.live.R;
 import com.andruby.live.adapter.ChatMsgListAdapter;
 import com.andruby.live.adapter.UserAvatarListAdapter;
@@ -29,6 +32,7 @@ import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.LivePlayerPresenter;
 import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
+import com.andruby.live.ui.customviews.EndDetailFragment;
 import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
 import com.andruby.live.utils.AsimpleCache.ACache;
@@ -37,6 +41,7 @@ import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
 import com.tencent.TIMMessage;
+import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePlayConfig;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
@@ -71,6 +76,8 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     private TextView tvMemberCount;
     private int mMemberCount = 0; //实时人数
     private int mTotalCount = 0; //总观众人数
+    private int mPraiseCount = 0;
+    private long mLiveStartTime = 0;
 
     private InputTextMsgDialog mInputTextMsgDialog;
 
@@ -86,6 +93,11 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     //观众列表
     private RecyclerView mUserAvatarList;
     private UserAvatarListAdapter mAvatarListAdapter;
+
+    private int mJoinCount = 0;
+    private boolean mOfficialMsgSended = false;
+
+    private ImageView ivLiveBg;
 
     @Override
     protected void setBeforeLayout() {
@@ -149,12 +161,15 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mUserAvatarList.setLayoutManager(linearLayoutManager);
 
+        ivLiveBg = obtainView(R.id.iv_live_bg);
     }
 
     @Override
     protected void initData() {
-        mLivePlayerPresenter.groupMember(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId,
-                mLiveInfo.userInfo.userId, mLiveInfo.groupId, 1, 20);
+        String headPic = ACache.get(this).getAsString("head_pic");
+        if (!TextUtils.isEmpty(headPic)) {
+            OtherUtils.blurBgPic(this, ivLiveBg, ACache.get(this).getAsString("head_pic"), R.drawable.bg);
+        }
     }
 
     private void getDataFormIntent() {
@@ -181,8 +196,8 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_back:
-                finish();
+            case R.id.btn_close:
+                showComfirmDialog(getString(R.string.msg_stop_watch), false);
                 break;
             case R.id.btn_message_input:
                 showInputMsgDialog();
@@ -226,7 +241,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        showComfirmDialog(getString(R.string.msg_stop_watch), false);
     }
 
     @Override
@@ -249,6 +264,10 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopPlay();
+    }
+
+    private void stopPlay() {
         mLivePlayerPresenter.quitGroup(ACache.get(this).getAsString("user_id"),
                 mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
         mLivePlayerPresenter.stopPlay(true);
@@ -290,13 +309,42 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onPlayEvent(int i, Bundle bundle) {
+    public void onPlayEvent(int event, Bundle bundle) {
+        //播放相关事件
+        if (event == TXLiveConstants.PLAY_EVT_PLAY_BEGIN) {
+            mLiveStartTime = System.currentTimeMillis();
+            ivLiveBg.setVisibility(View.GONE);
+            //可以上传播放状态
+            if (!mOfficialMsgSended) {
+                refreshMsg("", getString(R.string.live_system_name), getString(R.string.live_system_notify), Constants.AVIMCMD_TEXT_TYPE);
+                mOfficialMsgSended = true;
+            }
+        }
+
+        if (event < 0) {
+            if (event == TXLiveConstants.PLAY_ERR_NET_DISCONNECT) {
+                showComfirmDialog("请检查网络", true);
+            }
+        }
+        if (event == TXLiveConstants.PLAY_WARNING_HW_ACCELERATION_FAIL) {
+            mLivePlayerPresenter.enableHardwareDecode(false);
+            stopPlay();
+            mLivePlayerPresenter.startPlay(mPlayUrl, TXLivePlayer.PLAY_TYPE_LIVE_FLV);
+        }
+
+        Log.i(TAG, "onPlayEvent: event =" + event + " event description = " + bundle.getString(TXLiveConstants.EVT_DESCRIPTION));
 
     }
 
     @Override
     public void onNetStatus(Bundle bundle) {
-
+        //播放信息及状态
+        Log.i(TAG, "net status, CPU:" + bundle.getString(TXLiveConstants.NET_STATUS_CPU_USAGE) +
+                ", RES:" + bundle.getInt(TXLiveConstants.NET_STATUS_VIDEO_WIDTH) + "*" + bundle.getInt(TXLiveConstants.NET_STATUS_VIDEO_HEIGHT) +
+                ", SPD:" + bundle.getInt(TXLiveConstants.NET_STATUS_NET_SPEED) + "Kbps" +
+                ", FPS:" + bundle.getInt(TXLiveConstants.NET_STATUS_VIDEO_FPS) +
+                ", ARA:" + bundle.getInt(TXLiveConstants.NET_STATUS_AUDIO_BITRATE) + "Kbps" +
+                ", VRA:" + bundle.getInt(TXLiveConstants.NET_STATUS_VIDEO_BITRATE) + "Kbps");
     }
 
     @Override
@@ -323,38 +371,55 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     @Override
     public void onJoinGroupResult(int code, String msg) {
-        if (code == 0) {
+        if (code != 0) {
             mLivePlayerPresenter.enterGroup(ACache.get(this).getAsString("user_id"),
                     mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
+            if (Constants.ERROR_GROUP_NOT_EXIT == code) {
+                showErrorAndQuit(Constants.ERROR_MSG_GROUP_NOT_EXIT);
+            } else if (Constants.ERROR_QALSDK_NOT_INIT == code) {
+                mJoinCount++;
+                ((LiveApp) getApplication()).initSDK();
+                if (mJoinCount > 1) {
+                    showErrorAndQuit(Constants.ERROR_MSG_JOIN_GROUP_FAILED);
+                } else {
+                    mIMChatPresenter.joinGroup(mLiveInfo.groupId);
+                }
+            } else {
+                showErrorAndQuit(Constants.ERROR_MSG_JOIN_GROUP_FAILED + code);
+            }
+        } else {
+            // 进入房间成功  获取 成员数据
+            mLivePlayerPresenter.groupMember(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId,
+                    mLiveInfo.userInfo.userId, mLiveInfo.groupId, 1, 20);
         }
     }
 
     @Override
     public void onGroupDeleteResult() {
-        finish();
+        stopPlay();
+        long second = 0;
+        if (mLiveStartTime != 0) {
+            second = (System.currentTimeMillis() - mLiveStartTime) / 1000;
+        }
+        EndDetailFragment.invoke(getFragmentManager(), second, mPraiseCount, mTotalCount);
     }
 
     @Override
     public void handleTextMsg(SimpleUserInfo userInfo, String text) {
-        ChatEntity entity = new ChatEntity();
-        entity.setSenderName(userInfo.nickname + ":");
-        entity.setContext(text);
-        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
-        notifyMsg(entity);
+        refreshMsg(userInfo.userId, TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname, text, Constants.AVIMCMD_TEXT_TYPE);
+
     }
 
     @Override
     public void handlePraiseMsg(SimpleUserInfo userInfo) {
+        mPraiseCount++;
         mHeartLayout.addFavor();
     }
 
     @Override
     public void handlePraiseFirstMsg(SimpleUserInfo userInfo) {
-        ChatEntity entity = new ChatEntity();
-        entity.setSenderName(userInfo.nickname + ":");
-        entity.setContext("点亮了桃心");
-        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
-        notifyMsg(entity);
+        mPraiseCount++;
+        refreshMsg(userInfo.userId, TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname, "点亮了桃心", Constants.AVIMCMD_PRAISE_FIRST);
         mHeartLayout.addFavor();
     }
 
@@ -368,7 +433,6 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         Log.i(TAG, "handleEnterLiveMsg: ");
         //更新观众列表，观众进入显示
 
-        //更新头像列表 返回false表明已存在相同用户，将不会更新数据
         if (!mAvatarListAdapter.addItem(userInfo))
             return;
 
@@ -376,11 +440,7 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mTotalCount++;
         tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
 
-        ChatEntity entity = new ChatEntity();
-        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
-        entity.setContext("进入直播");
-        entity.setType(Constants.AVIMCMD_ENTER_LIVE);
-        notifyMsg(entity);
+        refreshMsg(userInfo.userId, TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname, "进入直播", Constants.AVIMCMD_ENTER_LIVE);
     }
 
     @Override
@@ -392,12 +452,12 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
 
         mAvatarListAdapter.removeItem(userInfo.userId);
+        refreshMsg(userInfo.userId, TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname, "退出直播", Constants.AVIMCMD_EXIT_LIVE);
+    }
 
-        ChatEntity entity = new ChatEntity();
-        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
-        entity.setContext("退出直播");
-        entity.setType(Constants.AVIMCMD_EXIT_LIVE);
-        notifyMsg(entity);
+    @Override
+    public void handleLiveEnd(SimpleUserInfo userInfo) {
+        stopPlay();
     }
 
     /**
@@ -420,10 +480,70 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     public void onTextSend(String msg, boolean tanmuOpen) {
         mIMChatPresenter.sendTextMsg(msg);
+        refreshMsg(ACache.get(this).getAsString("user_id"), "我:", msg, Constants.AVIMCMD_TEXT_TYPE);
+    }
+
+    /**
+     * 消息刷新显示
+     *
+     * @param name    发送者
+     * @param context 内容
+     * @param type    类型 （上线线消息和 聊天消息）
+     */
+    public void refreshMsg(String id, String name, String context, int type) {
         ChatEntity entity = new ChatEntity();
-        entity.setSenderName("我:");
-        entity.setContext(msg);
-        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        name = TextUtils.isEmpty(name) ? getString(R.string.live_tourist) : name;
+        entity.setId(id);
+        entity.setSenderName(name);
+        entity.setContext(context);
+        entity.setType(type);
         notifyMsg(entity);
     }
+
+
+    /**
+     * 显示确认消息
+     *
+     * @param msg     消息内容
+     * @param isError true错误消息（必须退出） false提示消息（可选择是否退出）
+     */
+    public void showComfirmDialog(String msg, Boolean isError) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(msg);
+
+        if (!isError) {
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    stopPlay();
+                    long second = 0;
+                    if (mLiveStartTime != 0) {
+                        second = (System.currentTimeMillis() - mLiveStartTime) / 1000;
+                    }
+                    EndDetailFragment.invoke(getFragmentManager(), second, mPraiseCount, mTotalCount);
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            //当情况为错误的时候，直接停止推流
+            stopPlay();
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+        }
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }
