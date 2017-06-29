@@ -128,7 +128,6 @@ public class LoginPresenter extends ILoginPresenter implements IMLogin.IMLoginLi
 						UserInfo info = (UserInfo) response.data;
 
 						UserInfoCache.saveCache(mLoginView.getContext(), info);
-						UserInfoMgr.getInstance().setUserInfo(info);
 						mIMLogin.setIMLoginListener(LoginPresenter.this);
 						mIMLogin.imLogin(info.userId, info.sigId);
 						ACache.get(mLoginView.getContext()).put(CacheConstants.LOGIN_USERNAME, userName);
@@ -212,7 +211,7 @@ public class LoginPresenter extends ILoginPresenter implements IMLogin.IMLoginLi
 				}
 			}
 		});
-
+		UserInfoMgr.getInstance().setUserInfo();
 		mLoginView.showMsg("登陆成功");
 		mIMLogin.removeIMLoginListener();
 		mLoginView.dismissLoading();

@@ -30,7 +30,7 @@ import com.andruby.live.R;
 
 /**
  * @description: 飘心动画心形界面类
- * 一个TCHeartView代表一个心形，由heart.png组成
+ * 一个HeartView代表一个心形，由heart.png组成
  * @author: Andruby
  * @time: 2016/12/17 10:23
  */

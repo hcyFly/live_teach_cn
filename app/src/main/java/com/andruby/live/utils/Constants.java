@@ -48,19 +48,18 @@ public class Constants {
 
 	//直播端右下角listview显示type
 	public static final int AVIMCMD_TEXT_TYPE = 0;
-	public static final int AVIMCMD_EnterLive = 1;          // 用户加入直播, Group消息  1
-	public static final int AVIMCMD_ExitLive = 2;         // 用户退出直播, Group消息  2
-	public static final int AVIMCMD_Praise = 3;           // 点赞消息, Demo中使用Group消息  3
-	public static final int AVIMCMD_Host_Leave = 4;         // 主播离开, Group消息  4
-	public static final int AVIMCMD_Host_Back = 5;         // 主播回来, Demo中使用Group消息  5
+	public static final int AVIMCMD_ENTER_LIVE = 1;          // 用户加入直播, Group消息  1
+	public static final int AVIMCMD_EXIT_LIVE = 2;         // 用户退出直播, Group消息  2
+	public static final int AVIMCMD_PRAISE = 3;           // 点赞消息, Demo中使用Group消息  3
+	public static final int AVIMCMD_HOST_LEAVE = 4;         // 主播离开, Group消息  4
+	public static final int AVIMCMD_HOST_BACK = 5;         // 主播回来, Demo中使用Group消息  5
 	public static final int AVIMCMD_SET_SILENCE = 7;  // 禁言消息、设置场控消息  7 // userId，userImage,nickName,type //1、禁言，2、场控 3、取消场控
 	public static final int AVIMCMD_FOLLOW = 8;           // 关注    8
-	public static final int AVIMCMD_Praise_first = 9;         // 观众第一次点心时发送该消息  9
+	public static final int AVIMCMD_PRAISE_FIRST = 9;         // 观众第一次点心时发送该消息  9
 	public static final int AVIMCMD_SYSTEM_NOTIFY = 10;         // 官方提示消息   10
 	public static final int AVIMCMD_GIFT = 12;         // 礼物消息   12
 	public static final int AVIMCMD_SHOW_INFO = 17;       // 显示消息  message ,color ,type （1 评论列中显示， 2 评论之上显示）
 	public static final int AVIMCMD_DANMU = 19;       // 直播回调状态消息。
-	public static final int MSG_SHOW_ADMIN = 71;       // 场控相关评论样式
 
 
 	public static final int LOCATION_PERMISSION_REQ_CODE = 1;

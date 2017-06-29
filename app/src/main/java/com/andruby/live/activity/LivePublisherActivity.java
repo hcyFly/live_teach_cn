@@ -9,8 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -20,15 +18,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andruby.live.R;
-import com.andruby.live.adapter.UserAvatarListAdapter;
-import com.andruby.live.logic.IMLogin;
+import com.andruby.live.adapter.ChatMsgListAdapter;
 import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.model.ChatEntity;
+import com.andruby.live.model.SimpleUserInfo;
 import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.PusherPresenter;
 import com.andruby.live.presenter.SwipeAnimationController;
@@ -41,12 +40,12 @@ import com.andruby.live.utils.HWSupportList;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
+import com.tencent.TIMMessage;
 import com.tencent.rtmp.TXLiveConstants;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.audio.TXAudioPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -64,8 +63,6 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
 
 
     private TXCloudVideoView mTXCloudVideoView;
-
-    private ArrayList<ChatEntity> mArrayListChatEntity = new ArrayList<>();
 
     private TXLivePushConfig mTXPushConfig = new TXLivePushConfig();
 
@@ -110,6 +107,10 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     private ObjectAnimator mObjAnim;
 
     private InputTextMsgDialog mInputTextMsgDialog;
+    //消息列表
+    private ArrayList<ChatEntity> mArrayListChatEntity = new ArrayList<>();
+    private ChatMsgListAdapter mChatMsgListAdapter;
+    private ListView mListViewMsg;
 
     @Override
     protected void setBeforeLayout() {
@@ -172,9 +173,13 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         mIMChatPresenter = new IMChatPresenter(this);
         recordAnmination();
 
+
         mInputTextMsgDialog = new InputTextMsgDialog(this, R.style.InputDialog);
         mInputTextMsgDialog.setmOnTextSendListener(this);
 
+        mListViewMsg = obtainView(R.id.im_msg_listview);
+        mChatMsgListAdapter = new ChatMsgListAdapter(this, mListViewMsg, mArrayListChatEntity);
+        mListViewMsg.setAdapter(mChatMsgListAdapter);
 
     }
 
@@ -243,6 +248,20 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
 
     @Override
     public void onGroupDeleteResult() {
+
+    }
+
+    @Override
+    public void handleTextMsg(SimpleUserInfo userInfo, String text) {
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(userInfo.nickname + ":");
+        entity.setContext(text);
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
+    }
+
+    @Override
+    public void onSendMsgResult(int code, TIMMessage timMessage) {
 
     }
 
@@ -394,6 +413,28 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     @Override
     public void onTextSend(String msg, boolean tanmuOpen) {
         mIMChatPresenter.sendTextMsg(msg);
+
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName("我:");
+        entity.setContext(msg);
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
+    }
+
+    /**
+     * 刷新消息列表
+     *
+     * @param entity
+     */
+    private void notifyMsg(final ChatEntity entity) {
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArrayListChatEntity.add(entity);
+                mChatMsgListAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 

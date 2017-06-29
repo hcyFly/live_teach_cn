@@ -9,25 +9,32 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andruby.live.R;
+import com.andruby.live.adapter.ChatMsgListAdapter;
 import com.andruby.live.logic.FrequeMgr;
+import com.andruby.live.model.ChatEntity;
 import com.andruby.live.model.LiveInfo;
+import com.andruby.live.model.SimpleUserInfo;
 import com.andruby.live.presenter.IMChatPresenter;
 import com.andruby.live.presenter.LivePlayerPresenter;
 import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
+import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
 import com.andruby.live.utils.ToastUtils;
+import com.tencent.TIMMessage;
 import com.tencent.rtmp.TXLivePlayConfig;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -59,6 +66,13 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     private InputTextMsgDialog mInputTextMsgDialog;
 
+    //消息列表
+    private ArrayList<ChatEntity> mArrayListChatEntity = new ArrayList<>();
+    private ChatMsgListAdapter mChatMsgListAdapter;
+    private ListView mListViewMsg;
+
+    //点赞频率控制
+    private FrequeMgr mLikeFrequeControl;
 
     @Override
     protected void setBeforeLayout() {
@@ -107,6 +121,9 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
         mIMChatPresenter.joinGroup(mLiveInfo.groupId);
 
+        mListViewMsg = obtainView(R.id.im_msg_listview);
+        mChatMsgListAdapter = new ChatMsgListAdapter(this, mListViewMsg, mArrayListChatEntity);
+        mListViewMsg.setAdapter(mChatMsgListAdapter);
 
     }
 
@@ -142,9 +159,21 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
             case R.id.btn_back:
                 finish();
                 break;
-
             case R.id.btn_message_input:
                 showInputMsgDialog();
+                break;
+            case R.id.btn_like:
+                //点赞发送请求限制
+                if (mLikeFrequeControl == null) {
+                    mLikeFrequeControl = new FrequeMgr();
+                    mLikeFrequeControl.init(2, 1);
+                }
+                if (mLikeFrequeControl.canTrigger()) {
+                    //向后台发送点赞信息
+                    mLivePlayerPresenter.doLike(mLiveInfo.userId, mLiveInfo.liveId);
+                    //向ChatRoom发送点赞消息
+//                    mIMChatPresenter.sendPraiseMessage();
+                }
                 break;
 
             default:
@@ -237,6 +266,11 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void doLikeResult(int result) {
+
+    }
+
+    @Override
     public void onJoinGroupResult(int code, String msg) {
 
     }
@@ -247,7 +281,43 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void handleTextMsg(SimpleUserInfo userInfo, String text) {
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(userInfo.nickname + ":");
+        entity.setContext(text);
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
+    }
+
+    @Override
+    public void onSendMsgResult(int code, TIMMessage timMessage) {
+
+    }
+
+    /**
+     * 刷新消息列表
+     *
+     * @param entity
+     */
+    private void notifyMsg(final ChatEntity entity) {
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArrayListChatEntity.add(entity);
+                mChatMsgListAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    @Override
     public void onTextSend(String msg, boolean tanmuOpen) {
         mIMChatPresenter.sendTextMsg(msg);
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName("我:");
+        entity.setContext(msg);
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
     }
 }
