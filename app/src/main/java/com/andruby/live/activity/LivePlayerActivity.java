@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +19,9 @@ import android.widget.Toast;
 
 import com.andruby.live.R;
 import com.andruby.live.adapter.ChatMsgListAdapter;
+import com.andruby.live.adapter.UserAvatarListAdapter;
 import com.andruby.live.logic.FrequeMgr;
+import com.andruby.live.logic.IMLogin;
 import com.andruby.live.model.ChatEntity;
 import com.andruby.live.model.LiveInfo;
 import com.andruby.live.model.SimpleUserInfo;
@@ -25,6 +31,7 @@ import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.ILivePlayerPresenter;
 import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
+import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
@@ -62,7 +69,8 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     private ImageView ivRecordBall;
     private TextView tvPuserName;
     private TextView tvMemberCount;
-    private long mMemberCount = 0;
+    private int mMemberCount = 0; //实时人数
+    private int mTotalCount = 0; //总观众人数
 
     private InputTextMsgDialog mInputTextMsgDialog;
 
@@ -73,6 +81,11 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
 
     //点赞频率控制
     private FrequeMgr mLikeFrequeControl;
+    private HeartLayout mHeartLayout;
+
+    //观众列表
+    private RecyclerView mUserAvatarList;
+    private UserAvatarListAdapter mAvatarListAdapter;
 
     @Override
     protected void setBeforeLayout() {
@@ -125,11 +138,23 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
         mChatMsgListAdapter = new ChatMsgListAdapter(this, mListViewMsg, mArrayListChatEntity);
         mListViewMsg.setAdapter(mChatMsgListAdapter);
 
+        mHeartLayout = obtainView(R.id.heart_layout);
+
+        //观众列表
+        mUserAvatarList = obtainView(R.id.rv_user_avatar);
+        mUserAvatarList.setVisibility(View.VISIBLE);
+        mAvatarListAdapter = new UserAvatarListAdapter(this, IMLogin.getInstance().getLastUserInfo().identifier);
+        mUserAvatarList.setAdapter(mAvatarListAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mUserAvatarList.setLayoutManager(linearLayoutManager);
+
     }
 
     @Override
     protected void initData() {
-
+        mLivePlayerPresenter.groupMember(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId,
+                mLiveInfo.userInfo.userId, mLiveInfo.groupId, 1, 20);
     }
 
     private void getDataFormIntent() {
@@ -163,17 +188,23 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
                 showInputMsgDialog();
                 break;
             case R.id.btn_like:
-                //点赞发送请求限制
                 if (mLikeFrequeControl == null) {
                     mLikeFrequeControl = new FrequeMgr();
                     mLikeFrequeControl.init(2, 1);
                 }
                 if (mLikeFrequeControl.canTrigger()) {
-                    //向后台发送点赞信息
-                    mLivePlayerPresenter.doLike(mLiveInfo.userId, mLiveInfo.liveId);
-                    //向ChatRoom发送点赞消息
-//                    mIMChatPresenter.sendPraiseMessage();
+                    if (!"1".equals(ACache.get(this).getAsString(mLiveInfo.liveId + "_first_praise"))) {
+                        mIMChatPresenter.sendPraiseFirstMessage();
+                        ACache.get(this).put(mLiveInfo.liveId + "_first_praise", "1");
+                        mLivePlayerPresenter.doLike(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
+                        mHeartLayout.addFavor();
+                    } else {
+                        mLivePlayerPresenter.doLike(ACache.get(this).getAsString("user_id"), mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
+                        mIMChatPresenter.sendPraiseMessage();
+                        mHeartLayout.addFavor();
+                    }
                 }
+                Log.i(TAG, "onClick: sendPraiseMessage");
                 break;
 
             default:
@@ -218,9 +249,12 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mLivePlayerPresenter.quitGroup(ACache.get(this).getAsString("user_id"),
+                mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
         mLivePlayerPresenter.stopPlay(true);
         mTXCloudVideoView.onDestroy();
         mIMChatPresenter.quitGroup(mLiveInfo.groupId);
+        ACache.get(this).put(mLiveInfo.liveId + "_first_praise", "0");
     }
 
     public static void invoke(Activity activity, LiveInfo liveInfo) {
@@ -271,13 +305,33 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onJoinGroupResult(int code, String msg) {
+    public void onGroupMembersResult(int retCode, int totalCount, ArrayList<SimpleUserInfo> membersList) {
+        if (retCode == 0 && totalCount > 0) {
+            mTotalCount += totalCount;
+            mMemberCount += totalCount;
+            tvMemberCount.setText("" + mMemberCount);
+            if (membersList != null) {
+                for (SimpleUserInfo userInfo : membersList) {
+                    mAvatarListAdapter.addItem(userInfo);
+                }
+            }
+        } else {
+            LogUtil.e(TAG, "onGroupMembersResult failed");
+        }
+    }
 
+
+    @Override
+    public void onJoinGroupResult(int code, String msg) {
+        if (code == 0) {
+            mLivePlayerPresenter.enterGroup(ACache.get(this).getAsString("user_id"),
+                    mLiveInfo.liveId, mLiveInfo.userInfo.userId, mLiveInfo.groupId);
+        }
     }
 
     @Override
     public void onGroupDeleteResult() {
-
+        finish();
     }
 
     @Override
@@ -290,8 +344,60 @@ public class LivePlayerActivity extends IMBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void handlePraiseMsg(SimpleUserInfo userInfo) {
+        mHeartLayout.addFavor();
+    }
+
+    @Override
+    public void handlePraiseFirstMsg(SimpleUserInfo userInfo) {
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(userInfo.nickname + ":");
+        entity.setContext("点亮了桃心");
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
+        mHeartLayout.addFavor();
+    }
+
+    @Override
     public void onSendMsgResult(int code, TIMMessage timMessage) {
 
+    }
+
+    @Override
+    public void handleEnterLiveMsg(SimpleUserInfo userInfo) {
+        Log.i(TAG, "handleEnterLiveMsg: ");
+        //更新观众列表，观众进入显示
+
+        //更新头像列表 返回false表明已存在相同用户，将不会更新数据
+        if (!mAvatarListAdapter.addItem(userInfo))
+            return;
+
+        mMemberCount++;
+        mTotalCount++;
+        tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
+
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
+        entity.setContext("进入直播");
+        entity.setType(Constants.AVIMCMD_ENTER_LIVE);
+        notifyMsg(entity);
+    }
+
+    @Override
+    public void handleExitLiveMsg(SimpleUserInfo userInfo) {
+        Log.i(TAG, "handleExitLiveMsg: ");
+        //更新观众列表，观众退出显示
+        if (mMemberCount > 0)
+            mMemberCount--;
+        tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
+
+        mAvatarListAdapter.removeItem(userInfo.userId);
+
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
+        entity.setContext("退出直播");
+        entity.setType(Constants.AVIMCMD_EXIT_LIVE);
+        notifyMsg(entity);
     }
 
     /**

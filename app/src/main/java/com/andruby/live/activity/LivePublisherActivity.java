@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 
 import com.andruby.live.R;
 import com.andruby.live.adapter.ChatMsgListAdapter;
+import com.andruby.live.adapter.UserAvatarListAdapter;
+import com.andruby.live.logic.IMLogin;
 import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.model.ChatEntity;
 import com.andruby.live.model.SimpleUserInfo;
@@ -33,6 +37,7 @@ import com.andruby.live.presenter.PusherPresenter;
 import com.andruby.live.presenter.SwipeAnimationController;
 import com.andruby.live.presenter.ipresenter.IIMChatPresenter;
 import com.andruby.live.presenter.ipresenter.IPusherPresenter;
+import com.andruby.live.ui.customviews.HeartLayout;
 import com.andruby.live.ui.customviews.InputTextMsgDialog;
 import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
@@ -99,6 +104,8 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     private ImageView ivHeadIcon;
     private ImageView ivRecordBall;
     private TextView tvMemberCount;
+    private int mMemberCount = 0; //实时人数
+    private int mTotalCount = 0; //总观众人数
     //播放信息：时间、红点
     private long mSecond = 0;
     private TextView tvBroadcastTime;
@@ -111,6 +118,15 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     private ArrayList<ChatEntity> mArrayListChatEntity = new ArrayList<>();
     private ChatMsgListAdapter mChatMsgListAdapter;
     private ListView mListViewMsg;
+
+    /**
+     * 点赞动画
+     */
+    private HeartLayout mHeartLayout;
+
+    //观众列表
+    private RecyclerView mUserAvatarList;
+    private UserAvatarListAdapter mAvatarListAdapter;
 
     @Override
     protected void setBeforeLayout() {
@@ -181,6 +197,17 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         mChatMsgListAdapter = new ChatMsgListAdapter(this, mListViewMsg, mArrayListChatEntity);
         mListViewMsg.setAdapter(mChatMsgListAdapter);
 
+        mHeartLayout = obtainView(R.id.heart_layout);
+
+
+        //观众列表
+        mUserAvatarList = obtainView(R.id.rv_user_avatar);
+        mUserAvatarList.setVisibility(View.VISIBLE);
+        mAvatarListAdapter = new UserAvatarListAdapter(this, IMLogin.getInstance().getLastUserInfo().identifier);
+        mUserAvatarList.setAdapter(mAvatarListAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mUserAvatarList.setLayoutManager(linearLayoutManager);
     }
 
     private void recordAnmination() {
@@ -261,7 +288,66 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     }
 
     @Override
+    public void handlePraiseMsg(SimpleUserInfo userInfo) {
+//        ChatEntity entity = new ChatEntity();
+//        entity.setSenderName(userInfo.nickname + ":");
+//        entity.setContext("点亮了桃心");
+//        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+//        notifyMsg(entity);
+        mHeartLayout.addFavor();
+    }
+
+    @Override
+    public void handlePraiseFirstMsg(SimpleUserInfo userInfo) {
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(userInfo.nickname + ":");
+        entity.setContext("点亮了桃心");
+        entity.setType(Constants.AVIMCMD_TEXT_TYPE);
+        notifyMsg(entity);
+        mHeartLayout.addFavor();
+    }
+
+    @Override
     public void onSendMsgResult(int code, TIMMessage timMessage) {
+
+    }
+
+    @Override
+    public void handleEnterLiveMsg(SimpleUserInfo userInfo) {
+        Log.i(TAG, "handleEnterLiveMsg: ");
+        //更新观众列表，观众进入显示
+
+        //更新头像列表 返回false表明已存在相同用户，将不会更新数据
+        if (!mAvatarListAdapter.addItem(userInfo))
+            return;
+
+        mMemberCount++;
+        mTotalCount++;
+        tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
+
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
+        entity.setContext("进入直播");
+        entity.setType(Constants.AVIMCMD_ENTER_LIVE);
+        notifyMsg(entity);
+    }
+
+    @Override
+    public void handleExitLiveMsg(SimpleUserInfo userInfo) {
+        Log.i(TAG, "handleExitLiveMsg: ");
+        //更新观众列表，观众退出显示
+
+        if (mMemberCount > 0)
+            mMemberCount--;
+        tvMemberCount.setText(String.format(Locale.CHINA, "%d", mMemberCount));
+
+        mAvatarListAdapter.removeItem(userInfo.userId);
+
+        ChatEntity entity = new ChatEntity();
+        entity.setSenderName(TextUtils.isEmpty(userInfo.nickname) ? userInfo.userId : userInfo.nickname);
+        entity.setContext("退出直播");
+        entity.setType(Constants.AVIMCMD_EXIT_LIVE);
+        notifyMsg(entity);
 
     }
 
@@ -282,6 +368,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         if (mPasuing) {
             mPasuing = false;
             mPusherPresenter.resumePusher();
+            mIMChatPresenter.sendMessage(Constants.AVIMCMD_HOST_BACK, "");
         }
     }
 
@@ -290,7 +377,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
         super.onPause();
         mTXCloudVideoView.onPause();
         mPusherPresenter.pausePusher();
-
+        mIMChatPresenter.sendMessage(Constants.AVIMCMD_HOST_LEAVE, "");
     }
 
     @Override

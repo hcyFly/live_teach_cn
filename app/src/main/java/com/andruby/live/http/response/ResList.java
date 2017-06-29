@@ -13,7 +13,7 @@ import java.util.List;
 public class ResList<T>  extends IDontObfuscate {
 
 	public int currentPage;
-	public int totalRow;
+	public int totalCount;
 	public int totalPage;
 
 	public List<T> items;
@@ -22,7 +22,7 @@ public class ResList<T>  extends IDontObfuscate {
 	public String toString() {
 		return "ResList{" +
 				"currentPage=" + currentPage +
-				", totalRow=" + totalRow +
+				", totalCount=" + totalCount +
 				", totalPage=" + totalPage +
 				", items=" + items +
 				'}';

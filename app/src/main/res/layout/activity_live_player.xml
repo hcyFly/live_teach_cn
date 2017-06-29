@@ -19,6 +19,8 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
+
+
     <RelativeLayout
         android:id="@+id/rl_controllLayer"
         android:layout_width="match_parent"
@@ -30,6 +32,15 @@
             android:layout_width="110dp"
             android:layout_height="35dp"
             android:layout_margin="5dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_user_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/layout_live_pusher_info"
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/tool_bar"
@@ -62,6 +73,21 @@
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/btn_close"
                 android:onClick="onClick" />
+        </RelativeLayout>
+        <!--点赞动画-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp">
+
+            <com.andruby.live.ui.customviews.HeartLayout
+                android:id="@+id/heart_layout"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:focusable="true" />
         </RelativeLayout>
 
         <ListView
