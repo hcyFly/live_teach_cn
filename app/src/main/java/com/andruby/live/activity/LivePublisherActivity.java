@@ -39,6 +39,7 @@ import com.andruby.live.logic.UserInfoMgr;
 import com.andruby.live.model.ChatEntity;
 import com.andruby.live.model.GiftInfo;
 import com.andruby.live.model.GiftWithUerInfo;
+import com.andruby.live.model.ShareData;
 import com.andruby.live.model.SimpleUserInfo;
 import com.andruby.live.model.UserInfoCache;
 import com.andruby.live.presenter.IMChatPresenter;
@@ -56,6 +57,7 @@ import com.andruby.live.utils.AsimpleCache.ACache;
 import com.andruby.live.utils.Constants;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.OtherUtils;
+import com.andruby.live.utils.ShareSDKUtils;
 import com.andruby.live.utils.ToastUtils;
 import com.tencent.TIMMessage;
 import com.tencent.imcore.MemberInfo;
@@ -88,6 +90,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     private boolean mPasuing = false;
 
     private String mPushUrl;
+    private String mLiveId;
     private String mGroupId;
     private String mUserId;
     private String mTitle;
@@ -474,7 +477,7 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_close:
+            case R.id.iv_close:
                 showComfirmDialog(getString(R.string.msg_stop_push_error), false);
                 break;
             case R.id.btn_message_input:
@@ -487,6 +490,13 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
             case R.id.iv_head_icon:
                 SimpleUserInfo userInfo = new SimpleUserInfo(UserInfoCache.getUserId(this), UserInfoCache.getNickname(this), UserInfoCache.getHeadPic(this));
                 mPusherPresenter.showUserInfo(this, userInfo);
+            case R.id.btn_share:
+                ShareData data = new ShareData();
+                data.setShareTitle("菜鸟直播");
+                data.setShareDesc(mNickName + "的直播");
+                data.setShareImageUrl(mHeadPicUrl);
+                data.setShareUrl(String.format("http://live.demo.cniao5.com/Alive/live?liveId=%s&userId=%s", mLiveId, UserInfoCache.getUserId(this)));
+                ShareSDKUtils.showShare(mContext, data);
                 break;
         }
 
@@ -528,8 +538,9 @@ public class LivePublisherActivity extends IMBaseActivity implements View.OnClic
     }
 
     @Override
-    public void onGetPushUrl(String pushUrl, int errorCode) {
+    public void onGetPushUrl(String liveId, String pushUrl, int errorCode) {
         mPushUrl = pushUrl;
+        mLiveId = liveId;
         if (errorCode == 0) {
             startPublish();
         } else {

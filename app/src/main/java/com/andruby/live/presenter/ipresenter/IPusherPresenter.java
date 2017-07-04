@@ -59,7 +59,7 @@ public abstract class IPusherPresenter extends ILivePresenter implements BasePre
          * @param pushUrl
          * @param errorCode 0表示成功 1表示失败
          */
-        void onGetPushUrl(String pushUrl, int errorCode);
+        void onGetPushUrl(String liveId,String pushUrl, int errorCode);
 
         void onPushEvent(int event, Bundle bundle);
 

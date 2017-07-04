@@ -68,7 +68,8 @@ public class MainActivity extends IMBaseActivity implements IMainPresenter.IMain
         mTabHost.getTabWidget().getChildTabViewAt(1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PublishSettingActivity.invoke(MainActivity.this);
+//                PublishSettingActivity.invoke(MainActivity.this);
+                PublishLiveActivity.invoke(MainActivity.this);
             }
         });
     }

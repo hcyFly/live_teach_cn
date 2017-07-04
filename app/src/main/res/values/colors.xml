@@ -38,7 +38,6 @@
     <color name="colorTransparentBlack">#44777777</color>
 
     <color name="colorDanmuMsg">#30e7d5</color>
-    <color name="red_da4644">#da4644</color>
     <color name="background">#f3f3f3</color>
     <color name="background_gray1">#EBEBEB</color>
     <color name="background_gray2">#E6E6E6</color>
@@ -165,4 +164,14 @@
     <color name="live_im_gift_back">#34feee</color>
     <color name="live_charm">#ff5a79</color>
 
+    <color name="red_da4644">#da4644</color>
+    <color name="red_f72a69">#f72169</color>
+    <color name="blue_50ffe6">#50ffe6</color>
+    <color name="gray_bbbbbb">#bbbbbb</color>
+    <color name="yellow_effd55">#effd55</color>
+    <color name="yellow_fffa6a">#fffa6a</color>
+    <color name="purple_7150ff">#7150ff</color>
+    <color name="purple_b28eff">#b28eff</color>
+    <color name="red_ff5058">#ff5058</color>
+    <color name="white_a8a8a9">#a8a8a9</color>
 </resources>

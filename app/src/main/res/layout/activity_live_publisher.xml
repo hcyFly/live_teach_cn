@@ -37,6 +37,16 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/layout_live_pusher_info"
             android:visibility="gone" />
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/live_btn_size"
+            android:layout_height="@dimen/live_btn_size"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/btn_close_selector"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:onClick="onClick" />
 
         <RelativeLayout
             android:id="@+id/tool_bar"
@@ -53,22 +63,23 @@
                 android:background="@drawable/icon_message"
                 android:onClick="onClick" />
 
-            <Button
-                android:id="@+id/btn_close"
-                android:layout_width="@dimen/live_btn_size"
-                android:layout_height="@dimen/live_btn_size"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/btn_close"
-                android:onClick="onClick" />
 
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="@dimen/live_btn_size"
                 android:layout_height="@dimen/live_btn_size"
                 android:layout_marginRight="20dp"
-                android:layout_toLeftOf="@id/btn_close"
+                android:layout_toLeftOf="@+id/btn_share"
                 android:background="@drawable/icon_setting_up"
                 android:onClick="onClick" />
+            <Button
+                android:id="@+id/btn_share"
+                android:layout_width="@dimen/live_btn_size"
+                android:layout_height="@dimen/live_btn_size"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_share_selector"
+                android:onClick="onClick"
+                />
         </RelativeLayout>
 
         <!--点赞动画-->

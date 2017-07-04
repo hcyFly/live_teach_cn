@@ -5,11 +5,12 @@ import android.util.Log;
 
 import com.andruby.live.utils.LiveLogUitil;
 import com.andruby.live.logic.IMInitMgr;
+import com.andruby.live.utils.ShareSDKUtils;
 import com.tencent.rtmp.TXLiveBase;
 
 /**
  * @description: 小直播应用类，用于全局的操作，如
- *                  sdk初始化,全局提示框
+ * sdk初始化,全局提示框
  * @author: Andruby
  * @time: 2016/12/17 10:23
  */
@@ -55,7 +56,9 @@ public class LiveApp extends Application {
         //初始化httpengine
 //        HttpEngine.getInstance().initContext(getApplicationContext());
 
-        Log.w("LiveLogUitil","app init sdk");
+        Log.w("LiveLogUitil", "app init sdk");
+
+        ShareSDKUtils.init(getApplicationContext());
     }
 
 }

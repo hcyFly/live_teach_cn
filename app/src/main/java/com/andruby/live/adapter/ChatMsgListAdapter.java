@@ -23,10 +23,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.andruby.live.R;
-import com.andruby.live.model.ChatEntity;
 import com.andruby.live.model.CurrentLiveInfo;
+import com.andruby.live.ui.customviews.AlignCenterImageSpan;
 import com.andruby.live.utils.CalcMemberColorUtil;
 import com.andruby.live.utils.Constants;
+import com.andruby.live.model.ChatEntity;
 import com.andruby.live.utils.LogUtil;
 import com.andruby.live.utils.UIUtils;
 
@@ -128,9 +129,31 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
             playViewAnimator(convertView, position, item);
         }
 
-        spanString = addNormalSpan(holder, item);
-        holder.sendContext.setText(spanString);
 
+        if (item.getType() == Constants.AVIMCMD_PRAISE_FIRST) {
+            spanString = addHeartSpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_SYSTEM_NOTIFY) {
+            spanString = addSystemSpan(holder, item);
+        }  else if (item.getType() == Constants.AVIMCMD_EXIT_LIVE) {
+            spanString = addMemberESpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_HOST_BACK || item.getType() == Constants
+                .AVIMCMD_HOST_LEAVE) {
+            spanString = addHostLeaveBackSpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_SET_SILENCE) {
+            spanString = addSilenceSpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_GIFT) {
+            spanString = addGiftSpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_FOLLOW) {
+            spanString = addFollowSpan(holder, item);
+        } else if (item.getType() == Constants.AVIMCMD_SHOW_INFO) {
+            spanString = addColorSpan(holder, item);
+        }  else {
+            spanString = addNormalSpan(holder, item);
+        }
+
+        holder.sendContext.setText(spanString);
+        // 设置控件实际宽度以便计算列表项实际高度
+        // holder.sendContext.fixViewWidth(mListView.getWidth());
         return convertView;
     }
 
@@ -143,10 +166,14 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
      */
     private SpannableString addGiftSpan(ViewHolder holder, ChatEntity item) {
         //获取内容
-        SpannableString spanString = new SpannableString(item.getSenderName() + item
+        SpannableString spanString = new SpannableString(item.getSenderName() + " " + item
                 .getContext());
-        holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                .live_im_gift_back));
+        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
+                        .gray_bbbbbb)),
+                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.sendContext.setTextColor(/*LiveInit.isHostLive() ?
+                   context.getResources().getColor(R.color.red_f72a69):*/
+                context.getResources().getColor(R.color.yellow_effd55));
         return spanString;
     }
 
@@ -163,6 +190,14 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
                 .getContext());
         holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
                 .live_im_content_follow));
+        return spanString;
+    }
+
+    private SpannableString addMemberESpan(ViewHolder holder, ChatEntity item) {
+        SpannableString spanString = new SpannableString(item.getSenderName() + context
+                .getString(R.string.live_quite_live));
+        holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
+                .live_im_join));
         return spanString;
     }
 
@@ -200,15 +235,13 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
     private SpannableString addSilenceSpan(ViewHolder holder, ChatEntity item) {
         //获取内容
         String body = item.getContext();
-        //禁言
-       /*int silenceStringlength = (context.getString(R.string
-                .live_member_silence_im)).length();*/
-        /*spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
-                        .live_im_name)),
-                0, body.length() - silenceStringlength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);*/
         SpannableString spanString = new SpannableString(body);
+        //禁言
+        int silenceStringlength = (context.getString(R.string.live_member_silence_im)).length();
+        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.blue_50ffe6)),
+                0, body.length() - silenceStringlength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                .live_im_gag_leave));
+                .gray_bbbbbb));
         return spanString;
     }
 
@@ -222,9 +255,13 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
     private SpannableString addSetAdmin(ViewHolder holder, ChatEntity item) {
         //获取内容
         String body = item.getContext();
+        String senderName = item.getSenderName();
         SpannableString spanString = new SpannableString(body);
+        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
+                        .blue_50ffe6)),
+                0, senderName.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                .live_im_system));
+                .gray_bbbbbb));
         return spanString;
     }
 
@@ -239,13 +276,8 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
         String body = item.getContext();
         //暂离和回来不显示发送者名称
         SpannableString spanString = new SpannableString(body);
-        if (TextUtils.equals(body, context.getString(R.string.live_host_leave))) {
-            holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                    .live_im_gag_leave));
-        } else {
-            holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                    .live_im_gift_back));
-        }
+        holder.sendContext.setTextColor(
+                context.getResources().getColor(R.color.purple_b28eff));
         return spanString;
     }
 
@@ -260,17 +292,11 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
         SpannableString spanString = new SpannableString(item.getSenderName() + context
                 .getString(R.string
                         .live_join_live));
+        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
+                        .blue_50ffe6)),
+                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                .live_im_join));
-        return spanString;
-    }
-
-    private SpannableString addMemberESpan(ViewHolder holder, ChatEntity item) {
-        SpannableString spanString = new SpannableString(item.getSenderName() + context
-                .getString(R.string
-                        .live_quite_live));
-        holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
-                .live_im_join));
+                .gray_bbbbbb));
         return spanString;
     }
 
@@ -282,17 +308,14 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
      * @return
      */
     private SpannableString addNormalSpan(ViewHolder holder, ChatEntity item) {
-        SpannableString spanString = new SpannableString(item.getSenderName() + " " + item
+        String context = item.getContext();
+        SpannableString spanString = new SpannableString(item.getSenderName() + ":" + item
                 .getContext());
-       /* // 设置名称为粗体
-        StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
-        //加粗用户名
-        spanString.setSpan(boldStyle, 0, item.getSenderName().length(), Spannable
-                .SPAN_EXCLUSIVE_EXCLUSIVE);*/
-        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
-                        .live_im_name)),
-                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        holder.sendContext.setTextColor(context.getResources().getColor(R.color
+        String spanStr = item.getSenderName() + ":" + item.getContext();
+        spanString.setSpan(new ForegroundColorSpan(this.context.getResources().getColor(R.color
+                        .blue_50ffe6)),
+                0, item.getSenderName().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.sendContext.setTextColor(this.context.getResources().getColor(R.color
                 .live_im_content_follow));
         return spanString;
     }
@@ -304,7 +327,7 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
      * @param item
      */
     private SpannableString addSystemSpan(ViewHolder holder, ChatEntity item) {
-        SpannableString spanString = new SpannableString(item.getSenderName() + item
+        /*SpannableString spanString = new SpannableString(item.getSenderName() + item
                 .getContext());
         // 设置名称为粗体
         StyleSpan boldStyle = new StyleSpan(Typeface.BOLD);
@@ -312,9 +335,12 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
                 .SPAN_EXCLUSIVE_EXCLUSIVE);
         spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
                         .live_im_name)),
-                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        holder.sendContext.setTextColor(context.getResources().getColor(R.color
-                .live_im_system));
+                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);*/
+        SpannableString spanString = new SpannableString(item.getContext());
+        holder.sendContext.setTextColor(/*LiveInit.isHostLive() ?
+                context.getResources().getColor(R.color.purple_b28eff):*/
+                context.getResources().getColor(R.color.red_ff5058));
+
         return spanString;
     }
 
@@ -327,18 +353,20 @@ public class ChatMsgListAdapter extends BaseAdapter implements AbsListView.OnScr
     private SpannableString addHeartSpan(ViewHolder holder, ChatEntity item) {
         SpannableString spanString = new SpannableString(item.getSenderName() + " " + item
                 .getContext() + "  ");
-        int i = CalcMemberColorUtil.calcNameColor(item.getId(), CurrentLiveInfo.getRoomId());
+        int i = CalcMemberColorUtil.calcNameColor(item.getId(),CurrentLiveInfo.getRoomId());
         Drawable drawable = context.getResources().getDrawable(CalcMemberColorUtil.icons[i]);
-        drawable.setBounds(0, 0, UIUtils.formatDipToPx(context, 13), UIUtils.formatDipToPx
-                (context, 13));
-        ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+        drawable.setBounds(0, 0, UIUtils.formatDipToPx(context, 15), UIUtils.formatDipToPx
+                (context, 15));
+        AlignCenterImageSpan span = new AlignCenterImageSpan(drawable);
         spanString.setSpan(span, item.getSenderName().length() + item.getContext().length() + 1 -
                         "[heart]".length(),
                 item.getSenderName().length() + item.getContext().length() + 1,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        spanString.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color
+                        .blue_50ffe6)),
+                0, item.getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.sendContext.setTextColor(context.getResources().getColor(R.color
-                .live_im_heart));
+                .purple_7150ff));
         return spanString;
     }
 

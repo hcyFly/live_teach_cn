@@ -281,4 +281,12 @@
     <string name="update_userinfo_failed">用户信息修改失败</string>
     <string name="my_about_info">菜鸟窝直播是以腾讯云直播为基础开发的一款直播软件。\r\n当前版本号%s</string>
     <string name="userinfo_modified_msg">用户信息已修改，是否保存？</string>
+
+    <string name="live_publish_location_open">显示位置</string>
+    <string name="live_publish_location_close">不显示位置</string>
+    <string name="live_publish_camera_front">镜头前置</string>
+    <string name="live_publish_camera_back">镜头后置</string>
+    <color name="colorTextWhiteTransparent">#88FFFFFF</color>
+    <color name="colorTextWhiteHalfTransparent">#7fFFFFFF</color>
+
 </resources>

@@ -86,13 +86,13 @@ public class PusherPresenter extends IPusherPresenter implements ITXLivePushList
                 if (response.status == RequestComm.SUCCESS) {
                     CreateLiveResp resp = (CreateLiveResp) response.data;
                     if (resp != null) {
-                        if (!TextUtils.isEmpty(resp.getPushUrl())) {
-                            mPusherView.onGetPushUrl(resp.getPushUrl(), 0);
+                        if (!TextUtils.isEmpty(resp.pushUrl)) {
+                            mPusherView.onGetPushUrl(resp.liveId, resp.pushUrl, 0);
                         } else {
-                            mPusherView.onGetPushUrl(null, 1);
+                            mPusherView.onGetPushUrl(null, null, 1);
                         }
                     } else {
-                        mPusherView.onGetPushUrl(null, 1);
+                        mPusherView.onGetPushUrl(null, null, 1);
                     }
                 } else {
                     mPusherView.showMsg(response.msg);
